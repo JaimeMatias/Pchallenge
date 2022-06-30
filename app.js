@@ -7,7 +7,7 @@ app.get('/', function (req, res) {
 
 
     console.log(ip);
-    res.send('Hello World')
+    res.send(`Hello ${ip}`)
 })
 
 app.listen(3000)
