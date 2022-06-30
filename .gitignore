@@ -1,4 +1,6 @@
 /node_modules
+/extras
 ipapiExample.js
 shouldTest.js
 superTest.js
+.env
