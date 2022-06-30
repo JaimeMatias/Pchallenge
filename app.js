@@ -1,5 +1,8 @@
 const express = require('express')
+var cors = require('cors')
 const app = express()
+
+app.use(cors())// Habilita las peticiones desde multiples origenes
 
 app.get('/', function (req, res) {
     //console.log(req)
