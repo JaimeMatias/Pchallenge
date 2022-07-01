@@ -8,7 +8,7 @@ class Server {
         this.port = process.env.PORT
 
         //Conectar a base de Datos
-        this.conectarDB()
+        // this.conectarDB()
         //Rutas de mi aplicacion
         this.routes()
     }
@@ -33,12 +33,12 @@ class Server {
         this.app.use('/v1', require("../routes/location"))
         this.app.use('/v1/current', require("../routes/current"))
         this.app.use('/v1/forecast', require("../routes/forecast"))
-        this.app.use('/*', require("../routes/notValid"))
+        // this.app.use('/*', require("../routes/notValid"))
 
     }
-    async conectarDB() {
-        await db_connection();
-    }
+    // async conectarDB() {
+    //     await db_connection();
+    // }
 
     listen() {
         this.app.listen(this.port, () => {

@@ -14,7 +14,7 @@
 const express = require('express');
 const router = express.Router();
 router.get('/', (req,res) => {
-    console.log('Funciona');
+    console.log('Mal Funciona');
     res.json(`lcation`);
 })
 module.exports = router;
