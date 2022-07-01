@@ -11,10 +11,10 @@
 
 // module.exports = router;
 
+// Complete location for your IP address
+
 const express = require('express');
+const { locationGet } = require('../controllers/locationController');
 const router = express.Router();
-router.get('/', (req,res) => {
-    console.log('Mal Funciona');
-    res.json(`lcation`);
-})
+router.get('/',locationGet);
 module.exports = router;

@@ -1,0 +1,29 @@
+
+const axios = require('axios').default;
+
+class Busqueda {
+    constructor() {
+    }
+
+    async ConvertirIpLocation() {
+        const response = await axios.get('https://ipapi.co/json/');
+
+        const { status } = response //Extraigo primero el status para verificar si esta correcto o no
+        console.log(`El status es: --${status}`)
+        if (status != 200) {
+            console.log('Debe generar error')
+            throw new Error('Falla en la solicitud')
+        }
+
+        //Como ya verifique que esta correcto, puedo extraer los datos y devolverlos
+        const { data } = response;
+        const { ip, city, latitude, longitude } = data;
+        console.log(data);
+        console.log(ip, city, latitude, longitude);
+
+
+        return ({ ip, city, latitude, longitude })
+    }
+}
+
+module.exports = Busqueda;

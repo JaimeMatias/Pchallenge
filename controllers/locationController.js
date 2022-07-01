@@ -1,12 +1,14 @@
 const { response } = require('express');
 const Busqueda = require('../Busqueda/busqueda');
 
-const currentGet = async (req, res = response) => {
+const locationGet = async (req, res = response) => {
     const buscar = new Busqueda();
     try {
 
+
         const resIP = await buscar.ConvertirIpLocation();
-        res.json(`current ${resIP}`);
+        console.log(resIP)
+        res.json(resIP);
     } catch (error) {
         res.status(400).json({
             status: 'Fail',
@@ -15,7 +17,5 @@ const currentGet = async (req, res = response) => {
     };
 
 
-
-    // console.log(resIP)
 }
-module.exports = { currentGet }
+module.exports = { locationGet }

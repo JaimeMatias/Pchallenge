@@ -31,6 +31,7 @@ class Server {
 
     routes() {
         this.app.use('/v1', require("../routes/location"))
+        this.app.use('/v1/location', require("../routes/location"))
         this.app.use('/v1/current', require("../routes/current"))
         this.app.use('/v1/forecast', require("../routes/forecast"))
         // this.app.use('/*', require("../routes/notValid"))
