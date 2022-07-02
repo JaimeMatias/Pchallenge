@@ -1,21 +1,22 @@
-const {Schema,model}=require('mongoose');
-const CitySchema =Schema({
-    IpSolicitud:{
-        type:String,
-        required:[true,'La IP es obligatorio']
+const { Schema, model } = require('mongoose');
+const CitySchema = Schema({
+    IpSolicitud: {
+        type: String,
+        required: [true, 'La IP es obligatoria']
     },
-    City:{
-        type:String,
-        required:[true,'La Ciudad es obligatorio']
+    City: {
+        type: String,
+        required: [true, 'La Ciudad es obligatoria']
     },
-    Latitud:{
-        type:Number,
-        required:[true,'La Latitud es obligatorio']
+    Latitud: {
+        type: Number,
+        required: [true, 'La Latitud es obligatoria']
     },
-    Longitud:{
-        type:Number,
-        required:[true,'La Longitud es obligatorio']
+    Longitud: {
+        type: Number,
+        required: [true, 'La Longitud es obligatoria']
     },
+
 })
 
-module.exports = model('Ciudad', CitySchema);
+module.exports = model('CiudadS', CitySchema);

@@ -8,8 +8,8 @@ class Server {
         this.port = process.env.PORT
 
         //Conectar a base de Datos
-            this.conectarDB()
-      
+        this.conectarDB()
+
         //Rutas de mi aplicacion
         this.routes()
     }
@@ -45,7 +45,7 @@ class Server {
 
             console.log(` ${error}`)
         }
-       
+
     }
 
     listen() {

@@ -3,26 +3,26 @@ const axios = require('axios').default;
 const ipware = require('ipware')().get_ip;
 require('dotenv').config();
 class Busqueda {
-    constructor() {
+    constructor(req) {
+        this.Ip = ''
+        this.data = {}
+        this.ObtenerIP(req)
     }
     async ObtenerIP(req) {
         const ipInfo = ipware(req);
         const { clientIp } = ipInfo
-        if (clientIp == '::1') {
-            return { clientIp: '' }
+
+        if (clientIp != '::1') {
+            this.Ip = clientIp
         }
-        return { clientIp }
     }
 
 
+    async ConvertirIpLocation() {
 
-    async ConvertirIpLocation(req) {
-        const IpSolicitud = await this.ObtenerIP(req)
-        console.log(IpSolicitud)
-        const {clientIp} = IpSolicitud
 
-        const response = await axios.get(`https://ipapi.co/${clientIp}/json/`);
-
+        const response = await axios.get(`https://ipapi.co/${this.Ip}/json/`);
+        console.log('Pasa por IPapi')
         const { status } = response //Extraigo primero el status para verificar si esta correcto o no
         if (status != 200) {
             console.log('Debe generar error')
@@ -31,16 +31,14 @@ class Busqueda {
 
         //Como ya verifique que esta correcto, puedo extraer los datos y devolverlos
         const { data } = response;
-        const { ip, city, latitude, longitude } = data;
-        console.log(ip, city, latitude, longitude);
-
-
-        return ({ ip, city, latitude, longitude })
+        const { ip: IpSolicitud, city: City, latitude: Latitud, longitude: Longitud } = data;
+        // const FechaAlta=Date.now()
+        this.data = { IpSolicitud, City, Latitud, Longitud }
     }
 
-    async ObtenerClima() {
+    async ObtenerClima(req) {
         try {
-            const ubicacion = this.ConvertirIpLocation()
+            const ubicacion = this.ConvertirIpLocation(req)
         } catch (error) {
             return error
         }
