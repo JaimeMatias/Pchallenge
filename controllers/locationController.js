@@ -9,7 +9,7 @@ const locationGet = async (req, res = response) => {
     (buscar.Ip == '') ? ipBuscada = '190.57.244.234' : ipBuscada = buscar.Ip;
 
     const { status, city } = await ciudad.buscarCiudadIP(ipBuscada)
-    if (status == 'Encontrada') { // ciudad.cargar_ciudad(buscar.data)
+    if (status == 'Encontrada') {
         res.status(200).json(city)
     }else {
         try {
@@ -24,9 +24,6 @@ const locationGet = async (req, res = response) => {
         ciudad.cargar_ciudad(buscar.data)
         res.status(200).json(buscar.data)
     }
-
-
-
 
 }
 module.exports = { locationGet }
