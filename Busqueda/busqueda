@@ -6,14 +6,22 @@ class Busqueda {
     constructor() {
     }
     async ObtenerIP(req) {
-        const ip_info = ipware(req);
-        console.log(ip_info)
+        const ipInfo = ipware(req);
+        const { clientIp } = ipInfo
+        if (clientIp == '::1') {
+            return { clientIp: '' }
+        }
+        return { clientIp }
     }
 
 
 
-    async ConvertirIpLocation() {
-        const response = await axios.get('https://ipapi.co/json/');
+    async ConvertirIpLocation(req) {
+        const IpSolicitud = await this.ObtenerIP(req)
+        console.log(IpSolicitud)
+        const {clientIp} = IpSolicitud
+
+        const response = await axios.get(`https://ipapi.co/${clientIp}/json/`);
 
         const { status } = response //Extraigo primero el status para verificar si esta correcto o no
         if (status != 200) {
