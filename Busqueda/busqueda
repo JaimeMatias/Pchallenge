@@ -1,15 +1,21 @@
 
 const axios = require('axios').default;
-
+const ipware = require('ipware')().get_ip;
+require('dotenv').config();
 class Busqueda {
     constructor() {
     }
+    async ObtenerIP(req) {
+        const ip_info = ipware(req);
+        console.log(ip_info)
+    }
+
+
 
     async ConvertirIpLocation() {
         const response = await axios.get('https://ipapi.co/json/');
 
         const { status } = response //Extraigo primero el status para verificar si esta correcto o no
-        console.log(`El status es: --${status}`)
         if (status != 200) {
             console.log('Debe generar error')
             throw new Error('Falla en la solicitud')
@@ -18,11 +24,21 @@ class Busqueda {
         //Como ya verifique que esta correcto, puedo extraer los datos y devolverlos
         const { data } = response;
         const { ip, city, latitude, longitude } = data;
-        console.log(data);
         console.log(ip, city, latitude, longitude);
 
 
         return ({ ip, city, latitude, longitude })
+    }
+
+    async ObtenerClima() {
+        try {
+            const ubicacion = this.ConvertirIpLocation()
+        } catch (error) {
+            return error
+        }
+
+        const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${process.env.OPM_KEY}`);
+
     }
 }
 

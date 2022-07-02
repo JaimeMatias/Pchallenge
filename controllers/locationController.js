@@ -3,9 +3,9 @@ const Busqueda = require('../Busqueda/busqueda');
 
 const locationGet = async (req, res = response) => {
     const buscar = new Busqueda();
+    await buscar.ObtenerIP(req);
     try {
-
-
+        // 
         const resIP = await buscar.ConvertirIpLocation();
         console.log(resIP)
         res.json(resIP);
