@@ -2,6 +2,7 @@
 const axios = require('axios').default;
 const ipware = require('ipware')().get_ip;
 require('dotenv').config();
+
 class Busqueda {
     constructor(req) {
         this.Ip = ''
@@ -9,6 +10,8 @@ class Busqueda {
         this.ObtenerIP(req)
     }
     async ObtenerIP(req) {
+        // Me devuelve la IP desde donde se realiza el request
+
         const ipInfo = ipware(req);
         const { clientIp } = ipInfo
 
@@ -18,8 +21,8 @@ class Busqueda {
     }
 
 
-    async ConvertirIpLocation() {
-
+    async ObtenerIpLocation() {
+        // Me devuelve los datos de la IP desde IPAPI
 
         const response = await axios.get(`https://ipapi.co/${this.Ip}/json/`);
         console.log('Pasa por IPapi')
@@ -36,15 +39,14 @@ class Busqueda {
         this.data = { IpSolicitud, City, Latitud, Longitud }
     }
 
-    async ObtenerClima(req) {
-        try {
-            const ubicacion = this.ConvertirIpLocation(req)
-        } catch (error) {
-            return error
-        }
+    async ObtenerClimaActual() {
+         // Me devuelve los datos actuales del clima
+console.log('Datos Clima Actual')
+        // const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${process.env.OPM_KEY}`);
 
-        const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${process.env.OPM_KEY}`);
-
+    }
+    async ObtenerClimaFuturo(){
+        console.log('Datos Clima Futuro')
     }
 }
 

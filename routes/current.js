@@ -1,6 +1,6 @@
 const express = require('express');
-const { currentGet } = require('../controllers/currentController');
+const { CurrentGet } = require('../controllers/currentController');
 const router = express.Router();
-router.get('/',currentGet )
-router.get('/:id',currentGet )
+router.get('/',CurrentGet )
+router.get('/:id',CurrentGet )
 module.exports = router;

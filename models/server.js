@@ -1,5 +1,5 @@
 const express = require('express');
-const { db_connection } = require('../database/config');
+const { ConectarDB } = require('../database/config');
 require('dotenv').config();
 const router = express.Router();
 class Server {
@@ -8,7 +8,7 @@ class Server {
         this.port = process.env.PORT
 
         //Conectar a base de Datos
-        this.conectarDB()
+        this.ConectarDB()
 
         //Rutas de mi aplicacion
         this.routes()
@@ -38,9 +38,9 @@ class Server {
         // this.app.use('/*', require("../routes/notValid"))
 
     }
-    async conectarDB() {
+    async ConectarDB() {
         try {
-            await db_connection();
+            await ConectarDB();
         } catch (error) {
 
             console.log(` ${error}`)

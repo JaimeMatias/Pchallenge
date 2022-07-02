@@ -2,18 +2,18 @@ const { response } = require('express');
 const Busqueda = require('../Busqueda/busqueda');
 const Ciudad = require('../models/city');
 
-const locationGet = async (req, res = response) => {
+const LocationGet = async (req, res = response) => {
     const buscar = new Busqueda(req);
     const ciudad = new Ciudad();
     let ipBuscada = '';
     (buscar.Ip == '') ? ipBuscada = '190.57.244.234' : ipBuscada = buscar.Ip;
 
-    const { status, city } = await ciudad.buscarCiudadIP(ipBuscada)
+    const { status, city } = await ciudad.BuscarCiudadIP(ipBuscada)
     if (status == 'Encontrada') {
         res.status(200).json(city)
     }else {
         try {
-            await buscar.ConvertirIpLocation();
+            await buscar.ObtenerIpLocation();
     
         } catch (error) {
             res.status(400).json({
@@ -21,9 +21,9 @@ const locationGet = async (req, res = response) => {
                 msg: 'Problema en la solicitud'
             });
         };
-        ciudad.cargar_ciudad(buscar.data)
+        ciudad.CargarCiudad(buscar.data)
         res.status(200).json(buscar.data)
     }
 
 }
-module.exports = { locationGet }
+module.exports = { LocationGet }

@@ -7,14 +7,14 @@ class Ciudad {
         this.city={}
     }
 
-    async cargar_ciudad(data) {
+    async CargarCiudad(data) {
         const city = new CiudadS(data)
 
         await city.save();
         console.log('ciudad guardada')
     }
 
-    async buscarCiudadIP(ip){
+    async BuscarCiudadIP(ip){
         const IpSolicitud=ip
         try {
             const city = await CiudadS.findOne({IpSolicitud})

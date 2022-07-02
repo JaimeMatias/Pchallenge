@@ -18,5 +18,10 @@ const CitySchema = Schema({
     },
 
 })
-
+CitySchema.methods.toJSON= function(){
+    const {_id,__v,estado,...resto}=this.toObject(); // Extraigo los datos del ID y de la Version de la respuesta obtenida de la BD
+    const uid=_id;
+    const ciudad={...resto};
+    return ciudad
+}
 module.exports = model('CiudadS', CitySchema);

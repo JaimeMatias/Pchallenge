@@ -14,7 +14,7 @@
 // Complete location for your IP address
 
 const express = require('express');
-const { locationGet } = require('../controllers/locationController');
+const { LocationGet } = require('../controllers/locationController');
 const router = express.Router();
-router.get('/',locationGet);
+router.get('/',LocationGet);
 module.exports = router;
