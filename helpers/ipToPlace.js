@@ -1,19 +1,34 @@
-var https = require('https');
 
-const options = {
-  path: '/8.8.8.8/json/',
-  host: 'ipapi.co',
-  port: 443,
-  headers: { 'User-Agent': 'nodejs-ipapi-v1.02' }
-};
-https.get(options, function(resp){
-    var body = ''
-    resp.on('data', function(data){
-        body += data;
-    });
+const Busqueda = require('../Busqueda/busqueda');
+const Ciudad = require('../models/city');
+const Clima = require('../models/clima');
 
-    resp.on('end', function(){
-        var loc = JSON.parse(body);
-        console.log(loc);
-    });
-});
+const IpToPlace = async (busqueda = Busqueda, ciudad = Ciudad) => {
+
+    let ipBuscada = '';
+    (busqueda.Ip == '') ? ipBuscada = '190.57.244.234' : ipBuscada = busqueda.Ip;
+    const { status, city } = await ciudad.BuscarCiudadIP(ipBuscada)
+    if (status == 'Encontrada') {
+        busqueda.data = city
+    } else {
+        // Como es una IP que no tengo guardada, la almacen
+        try {
+
+            await busqueda.ObtenerIpLocation();
+        } catch (error) {
+            throw new Error(error)
+        };
+
+        ciudad.CargarCiudad(busqueda.data);
+    }
+    const { City } = busqueda.data;
+    const clima = new Clima(busqueda.data)
+    const { statusClima, cityDB } = await clima.BuscarCiudad(City)
+    if (statusClima == 'Encontrada') {
+    }else {
+        clima.CargarNuevaCiudad()
+    }
+
+}
+
+module.exports = { IpToPlace }

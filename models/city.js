@@ -1,9 +1,8 @@
 const CiudadS = require("./DB_Clases/city");
 
-
-
 class Ciudad {
     constructor() {
+        this.mockName='Nombre Mock'
         this.city={}
     }
 
