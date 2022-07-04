@@ -31,7 +31,9 @@ class Ciudad {
         return {status:'Encontrada',city:this.city};
     }
     async BuscarCiudadName(name){
-        const City=name;
+        const City=name
+       
+        console.log(`La ciudad con la letra minuscula: ${City}`)
         try {
             const city = await CiudadS.findOne({City});
             this.city=city;

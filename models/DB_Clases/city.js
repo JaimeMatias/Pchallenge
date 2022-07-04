@@ -2,7 +2,6 @@ const { Schema, model } = require('mongoose');
 const CitySchema = Schema({
     IpSolicitud: {
         type: String,
-        required: [true, 'La IP es obligatoria']
     },
     City: {
         type: String,

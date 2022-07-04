@@ -6,7 +6,7 @@ const Clima = require('../models/clima');
 const IpToPlace = async (busqueda = Busqueda, ciudad = Ciudad) => {
 
     let ipBuscada = '';
-    (busqueda.Ip == '') ? ipBuscada = '181.93.236.130' : ipBuscada = busqueda.Ip;
+    (busqueda.Ip == '') ? ipBuscada = '190.57.244.234' : ipBuscada = busqueda.Ip;
     const { status, city } = await ciudad.BuscarCiudadIP(ipBuscada);
     if (status == 'Encontrada') {
         busqueda.data = city;
