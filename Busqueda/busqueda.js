@@ -61,15 +61,20 @@ class Busqueda {
         console.log('Datos Clima Futuro')
         const { City, Latitud, Longitud } = this.data
         console.log('Pasa por OpenWeather Futuro')
-        const response = await axios.get(`https://api.openweathermap.org/data/2.5/forecast?lat=${Latitud}&lon=${Longitud}&appid=${process.env.OpenWeatherMap_Key}&units=${this.unit}&cnt=${this.cnt}`);
+        const response = await axios.get(`https://api.openweathermap.org/data/2.5/forecast?lat=${Latitud}&lon=${Longitud}&appid=${process.env.OpenWeatherMap_Key}&units=${this.unit}&cnt=24`);
         const { status } = response //Extraigo primero el status para verificar si esta correcto o no
         if (status != 200) {
             console.log('Debe generar error')
             throw new Error('Falla en la solicitud')
         }
         const { data } = response;
-        console.log(data)
+        const {list}=data
+        this.dataClimaFuturo=list
         // this.dataClimaFuturo={City, Longitud, Latitud}
+    }
+    MostrarClimaActual(){
+        const {City, Longitud, Latitud, main, description, temperatura, visibility, wind, clouds}=this.dataClimaActual
+        return({City, Longitud, Latitud, main, description, temperatura, visibility, wind, clouds})
     }
 }
 

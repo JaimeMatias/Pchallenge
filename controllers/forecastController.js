@@ -7,7 +7,7 @@ const Clima = require('../models/clima');
 
 const { EndPointNoValido } = require('./notValidController');
 
-const CurrentGet = async (req, res = response) => {
+const ForcastGet = async (req, res = response) => {
     console.log(req.query)
     const { id } = req.params
     const buscar = new Busqueda(req);
@@ -24,14 +24,12 @@ const CurrentGet = async (req, res = response) => {
             break;
         case undefined:
             const clima=new Clima(buscar.data.City)
-            await IpToWeather(buscar,clima,0)
-             
-             res.json(buscar.dataClimaActual);
-            // res.json(buscar.dataClimaActual);
+            await IpToWeather(buscar,clima,1)
+            res.json(buscar.dataClimaFuturo);
             break
         default:
             await EndPointNoValido(req, res);
     }
 
 }
-module.exports = { CurrentGet }
+module.exports = { ForcastGet }

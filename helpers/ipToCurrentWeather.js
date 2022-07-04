@@ -6,37 +6,42 @@ const IpToWeather = async (busqueda = Busqueda, clima = Clima, type = 0) => {
 
     const { statusClima, cityDB } = await clima.BuscarCiudad()
     if (statusClima == 'Encontrada') {
-        const { FechaUltimaActualizacion, _id } = cityDB
+        const { FechaUltimaActualizacionCurrent,FechaUltimaActualizacionForecast, _id } = cityDB
         const fechaActual = new Date()
 
-        const diferenciaTiempo = (fechaActual - FechaUltimaActualizacion) / (1000 * 60) // (1000*60*60*24) --> milisegundos -> segundos -> minutos -> horas -> días
-        if (diferenciaTiempo > 15) {
-
-            console.log('Requiere realizar nueva consulta');
-            if (type == 0) {
+       
+        if (type == 0) {
+            let  diferenciaTiempo = (fechaActual - FechaUltimaActualizacionCurrent) / (1000 * 60) // (1000*60*60*24) --> milisegundos -> segundos -> minutos -> horas -> días
+            if (diferenciaTiempo > 1) {
+                console.log('Requiere realizar nueva consulta Current');
                 await busqueda.ObtenerClimaActual()
                 console.log(_id)
-                clima.ActualizarClimaActual(busqueda.dataClimaActual,_id)
+                clima.ActualizarClimaActual(busqueda.dataClimaActual, _id)
             } else {
-
+                console.log('Debo mostrar el clima sin cambiar')
+                busqueda.dataClimaActual = cityDB
             }
         } else {
-            console.log('Debo mostrar el clima sin cambiar')
-            if (type == 0) {
-                busqueda.dataClimaActual = cityDB
+            let  diferenciaTiempo = (fechaActual - FechaUltimaActualizacionForecast) / (1000 * 60) // (1000*60*60*24) --> milisegundos -> segundos -> minutos -> horas -> días
+            if (diferenciaTiempo > 2) {
+                console.log('Requiere realizar nueva consulta Forecast');
+                await busqueda.ObtenerClimaFuturo()
+                console.log(_id)
+                await clima.ActualizarClimaFuturo(busqueda.dataClimaFuturo)
             } else {
-
+                console.log('Debo mostrar el clima sin cambiar')
+                busqueda.dataClimaFuturo = cityDB.ForecastWeather
             }
         }
-        // console.log(cityDB)
+
 
     } else {
         console.log('Ciudad No encontrada')
-        if (type == 0) {
-            await busqueda.ObtenerClimaActual()
-            clima.CargarNuevoClima(busqueda.dataClimaActual)
-        } else {
+        await busqueda.ObtenerClimaActual()
+        clima.CargarNuevoClima(busqueda.dataClimaActual)
+        if (type == 1) {
             await busqueda.ObtenerClimaFuturo()
+            await clima.ActualizarClimaFuturo(busqueda.dataClimaFuturo)
         }
     }
     // busqueda.ObtenerClimaActual()

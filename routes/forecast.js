@@ -1,7 +1,5 @@
 const express = require('express');
+const { ForcastGet } = require('../controllers/forecastController');
 const router = express.Router();
-router.get('/', (req,res) => {
-    console.log('mal Funciona');
-    res.json(`forecast`);
-})
+router.get('/',ForcastGet)
 module.exports = router;

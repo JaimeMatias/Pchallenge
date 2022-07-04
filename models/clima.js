@@ -4,6 +4,7 @@ class Clima {
     constructor(City) {
         this.mockWeather = 'cloudy'
         this.ciudad = City;
+        this.id=''
         //  this.IpSolicitud = data.IpSolicitud
         //  this.Latitud = data.Latitud
         //  this.Longitud = data.Longitud
@@ -16,11 +17,13 @@ class Clima {
     async CargarNuevoClima(climaActual) {
         const nuevoClima = {
             ...climaActual,
-            FechaUltimaActualizacion: this.FechaUltimaActualizacion
+            FechaUltimaActualizacionCurrent: this.FechaUltimaActualizacion
         }
 
         const clima = new Climas(nuevoClima)
 
+     
+        this.id=clima._id
         try {
             await clima.save();
         } catch (error) {
@@ -29,6 +32,7 @@ class Clima {
 
         console.log('Clima guardada')
     }
+
 
     async BuscarCiudad() {
         try {
@@ -43,29 +47,24 @@ class Clima {
             //   const city=this.city
             return { statusClima: 'No Encontrada', city: null }
         }
+        this.id=this.cityDB._id
         return { statusClima: 'Encontrada', cityDB: this.cityDB }
     }
     async ActualizarClimaActual(climaActual, id) {
         console.log(climaActual)
-        await Climas.findByIdAndUpdate(id, { climaActual,FechaUltimaActualizacion:this.FechaUltimaActualizacion })
+        await Climas.findByIdAndUpdate(id, { climaActual, FechaUltimaActualizacionCurrent: this.FechaUltimaActualizacion })
         console.log('Ciudad Actualizada')
     }
-    // async ActualizarIpCiudad() {
-    //     let { IpSolicitud } = this.cityDB
-    //     console.log(this.cityDB._id)
-    //     console.log(`Ip BUscada: ${this.IpSolicitud}`)
-    //     console.log(IpSolicitud)
-    //     if (IpSolicitud.includes(this.IpSolicitud)) {
-    //         return
-    //     }
-    //     IpSolicitud.push(this.IpSolicitud)
-    //     console.log(IpSolicitud)
+
     
-    //      console.log('Ip anadida a la lista')
-    //     console.log(citty)
+    async ActualizarClimaFuturo(ClimaFuturo) {
+        console.log('Mostrando datos a guardar a futuro')
+        console.log(`El ID del nuevo elemento ${this.id}`)
+        await Climas.findByIdAndUpdate(this.id,{ForecastWeather:ClimaFuturo,FechaUltimaActualizacionForecast: this.FechaUltimaActualizacion})
+
+    }
 
 
-    // }
 
 }
 
