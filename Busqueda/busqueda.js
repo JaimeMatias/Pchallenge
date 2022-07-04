@@ -8,13 +8,15 @@ class Busqueda {
         this.Ip = ''
         this.data = {}
         this.ObtenerIP(req)
+        this.dataClimaActual = {}
+        this.dataClimaFuturo={}
+        this.unit='metric'
+        this.cnt=24
     }
     async ObtenerIP(req) {
         // Me devuelve la IP desde donde se realiza el request
-
         const ipInfo = ipware(req);
         const { clientIp } = ipInfo
-
         if (clientIp != '::1') {
             this.Ip = clientIp
         }
@@ -40,13 +42,34 @@ class Busqueda {
     }
 
     async ObtenerClimaActual() {
-         // Me devuelve los datos actuales del clima
-console.log('Datos Clima Actual')
-        // const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${process.env.OPM_KEY}`);
-
+        // Me devuelve los datos actuales del clima
+        const { City, Latitud, Longitud } = this.data
+        console.log('Pasa por OpenWeather current')
+        const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${Latitud}&lon=${Longitud}&appid=${process.env.OpenWeatherMap_Key}&units=${this.unit}`);
+        const { status } = response //Extraigo primero el status para verificar si esta correcto o no
+        if (status != 200) {
+            console.log('Debe generar error')
+            throw new Error('Falla en la solicitud')
+        }
+        const { data } = response;
+        const { main, description } = data.weather[0];
+        const { main: temperatura, visibility, wind, clouds } = data
+        this.dataClimaActual = { City, Longitud, Latitud, main, description, temperatura, visibility, wind, clouds }
     }
-    async ObtenerClimaFuturo(){
+
+    async ObtenerClimaFuturo() {
         console.log('Datos Clima Futuro')
+        const { City, Latitud, Longitud } = this.data
+        console.log('Pasa por OpenWeather Futuro')
+        const response = await axios.get(`https://api.openweathermap.org/data/2.5/forecast?lat=${Latitud}&lon=${Longitud}&appid=${process.env.OpenWeatherMap_Key}&units=${this.unit}&cnt=${this.cnt}`);
+        const { status } = response //Extraigo primero el status para verificar si esta correcto o no
+        if (status != 200) {
+            console.log('Debe generar error')
+            throw new Error('Falla en la solicitud')
+        }
+        const { data } = response;
+        console.log(data)
+        // this.dataClimaFuturo={City, Longitud, Latitud}
     }
 }
 

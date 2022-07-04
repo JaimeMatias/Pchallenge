@@ -1,11 +1,14 @@
 const { response } = require('express');
 const Busqueda = require('../Busqueda/busqueda');
+const { IpToWeather } = require('../helpers/ipToCurrentWeather');
 const { IpToPlace } = require('../helpers/ipToPlace');
 const Ciudad = require('../models/city');
-const { LocationGet } = require('./locationController');
+const Clima = require('../models/clima');
+
 const { EndPointNoValido } = require('./notValidController');
 
 const CurrentGet = async (req, res = response) => {
+    console.log(req.query)
     const { id } = req.params
     const buscar = new Busqueda(req);
     const ciudad = new Ciudad();
@@ -20,7 +23,9 @@ const CurrentGet = async (req, res = response) => {
             res.json(buscar.data);
             break;
         case undefined:
-            res.json(buscar.data);
+            const clima=new Clima(buscar.data.City)
+            await IpToWeather(buscar,clima)
+            res.json(buscar.dataClimaActual);
             break
         default:
             await EndPointNoValido(req, res);

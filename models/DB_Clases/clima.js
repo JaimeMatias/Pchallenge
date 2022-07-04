@@ -4,31 +4,47 @@ const ClimaSchema = Schema({
         type: String,
 
     },
-    IpSolicitud:
-        [{
-            type: String,
-
-        }]
-    ,
-
     Latitud: {
         type: Number,
-
     },
     Longitud: {
         type: Number,
 
     },
+    main: {
+        type: String,
+    },
+    description: {
+        type: String,
+    },
+    temperatura: {
+        type: Array,
+    },
+    visibility: {
+        type: Number,
+
+    },
+    wind: {
+        type: Array,
+    },
+    clouds: {
+        type: Array,
+    },
     FechaUltimaActualizacion: {
         type: Date,
 
     }
-
 })
 ClimaSchema.methods.toJSON = function () {
-    const { _id, __v, estado, ...resto } = this.toObject(); // Extraigo los datos del ID y de la Version de la respuesta obtenida de la BD
+    let { _id, __v, estado, FechaUltimaActualizacion, City, Latitud, Longitud, main, description, temperatura, visibility, wind, clouds } = this.toObject(); // Extraigo los datos del ID y de la Version de la respuesta obtenida de la BD
     const uid = _id;
-    const clima = { ...resto };
+    const { temp, feels_like, temp_min, temp_max, pressure, humidity } = temperatura[0]
+    temperatura={ temp, feels_like, temp_min, temp_max, pressure, humidity }
+    const {speed,deg}= wind[0]
+    wind={speed,deg}
+    const {all}= clouds[0]
+    clouds={all}
+    const clima = { City, Latitud, Longitud, main, description, temperatura, visibility, wind, clouds };
     return clima
 }
 module.exports = model('Climas', ClimaSchema);

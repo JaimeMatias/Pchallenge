@@ -9,7 +9,7 @@ try {
     });
     console.log('Base de Datos Conectada Correctamente');
 } catch (error) {
-    throw new Error('Error a la hora de iniciar la base de datos');
+    throw new Error('Error a la hora de iniciar la base de datos Verificar cadena de conexion o Conectividad');
 }
 };
 module.exports={

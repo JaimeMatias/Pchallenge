@@ -6,7 +6,7 @@ const Ciudad = require('../models/city');
 const LocationGet = async (req, res = response) => {
     const buscar = new Busqueda(req);
     const ciudad = new Ciudad();
-    const clima = new clima()
+   
     try {
         await IpToPlace(buscar, ciudad)
     } catch (error) {
