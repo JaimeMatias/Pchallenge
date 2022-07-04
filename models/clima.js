@@ -1,13 +1,12 @@
 const Climas = require("./DB_Clases/clima");
 
 class Clima {
+    // Clase encargada de todas las interacciones con la DB de la clase clima
+
     constructor(City) {
         this.mockWeather = 'cloudy';
         this.ciudad = City;
         this.id = '';
-        //  this.IpSolicitud = data.IpSolicitud
-        //  this.Latitud = data.Latitud
-        //  this.Longitud = data.Longitud
         this.cityDB = {};
         this.FechaUltimaActualizacion = Date();
 
