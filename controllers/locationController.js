@@ -8,12 +8,12 @@ const LocationGet = async (req, res = response) => {
     const ciudad = new Ciudad();
    
     try {
-        await IpToPlace(buscar, ciudad)
+        await IpToPlace(buscar, ciudad);
     } catch (error) {
         // res.status(400).json({msg:'PROBLEMAS GRAVES'})
-    }
-    res.status(200).json(buscar.data)
+    };
+    res.status(200).json(buscar.data);
 
 
-}
-module.exports = { LocationGet }
+};
+module.exports = { LocationGet };

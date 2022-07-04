@@ -5,19 +5,19 @@ const router = express.Router();
 class Server {
     constructor() {
         this.app = express();
-        this.port = process.env.PORT
+        this.port = process.env.PORT;
 
         //Conectar a base de Datos
-        this.ConectarDB()
+        this.ConectarDB();
 
         //Rutas de mi aplicacion
-        this.routes()
-    }
+        this.routes();
+    };
 
     // Middlewares
     middlewares() {
 
-    }
+    };
     // Metodos
     // routes() {
     //     this.app.get('/V2', function (req, res) {
@@ -31,30 +31,30 @@ class Server {
     // }
 
     routes() {
-        this.app.use('/v1', require("../routes/location"))
-        this.app.use('/v1/location', require("../routes/location"))
-        this.app.use('/v1/current', require("../routes/current"))
-        this.app.use('/v1/forecast', require("../routes/forecast"))
+        this.app.use('/v1', require("../routes/location"));
+        this.app.use('/v1/location', require("../routes/location"));
+        this.app.use('/v1/current', require("../routes/current"));
+        this.app.use('/v1/forecast', require("../routes/forecast"));
         // this.app.use('/*', require("../routes/notValid"))
 
-    }
+    };
     async ConectarDB() {
         try {
             await ConectarDB();
         } catch (error) {
 
-            throw new Error(error)
+            throw new Error(error);
         }
 
-    }
+    };
 
     listen() {
         this.app.listen(this.port, () => {
 
-            console.log('Inicializando Aplicacion puerto:', this.port)
+            console.log('Inicializando Aplicacion puerto:', this.port);
 
         })
-    }
+    };
 }
 
 module.exports = Server;
