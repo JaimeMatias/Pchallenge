@@ -38,12 +38,19 @@ class Busqueda {
 
     async ObtenerIpLocation() {
         // Me devuelve los datos de la IP desde IPAPI
-        const response = await axios.get(`https://ipapi.co/${this.Ip}/json/`);
+        let response={}
+        try {
+            response= await axios.get(`https://ipapi.co/${this.Ip}/json/`)
+        } catch (error) {
+            console.log('Debe generar error');
+            throw new Error('Falla en la solicitud en IPAPI Bad Query');
+        }
+    console.log(response)
         console.log('Pasa por IPapi');
         const { status } = response //Extraigo primero el status para verificar si esta correcto o no
         if (status != 200) {
             console.log('Debe generar error');
-            throw new Error('Falla en la solicitud');
+            throw new Error('Falla en la solicitud en IPAPI Sin Informacion');
         }
 
         //Como ya verifique que esta correcto, puedo extraer los datos y devolverlos
