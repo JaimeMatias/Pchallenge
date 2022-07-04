@@ -17,7 +17,7 @@ const CurrentGet = async (req, res = response) => {
     const ciudad = new Ciudad();
     if (city != undefined) {
         console.log('Ingresa ');
-       await  CityToPlace(city,buscar,ciudad,0);
+       await  CityToPlace(city,buscar,ciudad);
        console.log('Sale ');
         res.json(buscar.data);
     } else {
