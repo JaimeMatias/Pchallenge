@@ -1,8 +1,11 @@
 const express = require('express');
-const { ConectarDB } = require('../database/config');
 require('dotenv').config();
+const { ConectarDB } = require('../database/config');
+
 const router = express.Router();
+
 class Server {
+    //Clase Servidor y la encargada de orquestar todo el sistema
     constructor() {
         this.app = express();
         this.port = process.env.PORT;
@@ -18,24 +21,16 @@ class Server {
     middlewares() {
 
     };
-    // Metodos
-    // routes() {
-    //     this.app.get('/V2', function (req, res) {
-
-    //         res.json(`Hola Mundo`)
-    //     })
-    //     this.app.get('/*', function (req, res) {
-
-    //         res.status(404).json(`404 Pagina no encontrada`)
-    //     })
-    // }
 
     routes() {
+        //Rutas Validas
         this.app.use('/v1', require("../routes/location"));
         this.app.use('/v1/location', require("../routes/location"));
         this.app.use('/v1/current', require("../routes/current"));
         this.app.use('/v1/forecast', require("../routes/forecast"));
-        // this.app.use('/*', require("../routes/notValid"))
+
+        //Cualquier otra ruta, se considera invalida
+        this.app.use('/*', require("../routes/notValid"))
 
     };
     async ConectarDB() {
