@@ -9,9 +9,9 @@ class Busqueda {
         this.data = {}
         this.ObtenerIP(req)
         this.dataClimaActual = {}
-        this.dataClimaFuturo={}
-        this.unit='metric'
-        this.cnt=24
+        this.dataClimaFuturo = {}
+        this.unit = 'metric'
+        this.cnt = 24
     }
     async ObtenerIP(req) {
         // Me devuelve la IP desde donde se realiza el request
@@ -66,9 +66,36 @@ class Busqueda {
             throw new Error('Falla en la solicitud')
         }
         const { data } = response;
-        const {list}=data
-        this.dataClimaFuturo=list
+        const { list } = data
+        this.dataClimaFuturo = list
         // this.dataClimaFuturo={City, Longitud, Latitud}
+    }
+
+    async ObtenerCoordenadasCiudad(nombre) {
+        const response = await axios.get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${nombre}.json?access_token=${process.env.MapBox_Key}&limit=1`);
+        console.log('Pasa por Mapbox Presente')
+        const { status } = response //Extraigo primero el status para verificar si esta correcto o no
+        if (status != 200) {
+            console.log('Debe generar error')
+            throw new Error('Falla en la solicitud')
+        }
+        const { data } = response;
+
+        const { features } = data
+        if (!features.length) {
+            this.data = { msg: 'No se encontraron ciudades con ese criterio' }
+            console.log('Sin resultados')
+        } else {
+            const Longitud = features[0].center[0]
+            const Latitud = features[0].center[1]
+            this.data = { City: nombre, Latitud, Longitud }
+
+        }
+        // console.log(features[0].center[0])
+        // 
+        // c
+        // 
+        // 
     }
 }
 

@@ -1,0 +1,23 @@
+
+const Busqueda = require('../Busqueda/busqueda');
+const Ciudad = require('../models/city');
+const Clima = require('../models/clima');
+
+const CityToPlace = async (cityBuscada,busqueda = Busqueda, ciudad = Ciudad, type = 0) => {
+    if (type == 0) {
+        const {status,city}=await ciudad.BuscarCiudadName(cityBuscada)
+        if (status =='Encontrada'){
+            busqueda.data=city
+        }else{
+            console.log('Se busca la ciudad')
+            await busqueda.ObtenerCoordenadasCiudad(cityBuscada)
+        }
+    
+        console.log(busqueda.data)
+
+    } else {
+        console.log('Seva por el else')
+    }
+
+}
+module.exports = { CityToPlace }
