@@ -12,21 +12,19 @@ const IpToWeather = async (busqueda = Busqueda, clima = Clima, type = 0) => {
        
         if (type == 0) {
             let  diferenciaTiempo = (fechaActual - FechaUltimaActualizacionCurrent) / (1000 * 60) // (1000*60*60*24) --> milisegundos -> segundos -> minutos -> horas -> días
-            if (diferenciaTiempo > 1) {
+            if (diferenciaTiempo > 15) {
                 console.log('Requiere realizar nueva consulta Current');
                 await busqueda.ObtenerClimaActual()
-                console.log(_id)
-                clima.ActualizarClimaActual(busqueda.dataClimaActual, _id)
+                await clima.ActualizarClimaActual(busqueda.dataClimaActual, _id)
             } else {
                 console.log('Debo mostrar el clima sin cambiar')
                 busqueda.dataClimaActual = cityDB
             }
         } else {
             let  diferenciaTiempo = (fechaActual - FechaUltimaActualizacionForecast) / (1000 * 60) // (1000*60*60*24) --> milisegundos -> segundos -> minutos -> horas -> días
-            if (diferenciaTiempo > 2) {
+            if (diferenciaTiempo > 60) {
                 console.log('Requiere realizar nueva consulta Forecast');
                 await busqueda.ObtenerClimaFuturo()
-                console.log(_id)
                 await clima.ActualizarClimaFuturo(busqueda.dataClimaFuturo)
             } else {
                 console.log('Debo mostrar el clima sin cambiar')

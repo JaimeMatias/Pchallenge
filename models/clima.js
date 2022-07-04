@@ -4,7 +4,7 @@ class Clima {
     constructor(City) {
         this.mockWeather = 'cloudy'
         this.ciudad = City;
-        this.id=''
+        this.id = ''
         //  this.IpSolicitud = data.IpSolicitud
         //  this.Latitud = data.Latitud
         //  this.Longitud = data.Longitud
@@ -22,8 +22,8 @@ class Clima {
 
         const clima = new Climas(nuevoClima)
 
-     
-        this.id=clima._id
+
+        this.id = clima._id
         try {
             await clima.save();
         } catch (error) {
@@ -47,25 +47,23 @@ class Clima {
             //   const city=this.city
             return { statusClima: 'No Encontrada', city: null }
         }
-        this.id=this.cityDB._id
+        this.id = this.cityDB._id
         return { statusClima: 'Encontrada', cityDB: this.cityDB }
     }
     async ActualizarClimaActual(climaActual, id) {
-        console.log(climaActual)
         await Climas.findByIdAndUpdate(id, { climaActual, FechaUltimaActualizacionCurrent: this.FechaUltimaActualizacion })
-        console.log('Ciudad Actualizada')
+        console.log('Clima Actual Actualizado')
     }
 
-    
+
     async ActualizarClimaFuturo(ClimaFuturo) {
-        console.log('Mostrando datos a guardar a futuro')
-        console.log(`El ID del nuevo elemento ${this.id}`)
-        await Climas.findByIdAndUpdate(this.id,{ForecastWeather:ClimaFuturo,FechaUltimaActualizacionForecast: this.FechaUltimaActualizacion})
-
+        await Climas.findByIdAndUpdate(this.id, { ForecastWeather: ClimaFuturo, FechaUltimaActualizacionForecast: this.FechaUltimaActualizacion })
+        console.log('Clima Futuro Actualizado')
     }
-
-
-
 }
+
+
+
+
 
 module.exports = Clima;

@@ -25,7 +25,10 @@ const ForcastGet = async (req, res = response) => {
         case undefined:
             const clima=new Clima(buscar.data.City)
             await IpToWeather(buscar,clima,1)
-            res.json(buscar.dataClimaFuturo);
+            const {City,Longitud,Latitud}=buscar.data
+
+            const ForecastWeather=buscar.dataClimaFuturo
+            res.json({City,Longitud,Latitud,ForecastWeather});
             break
         default:
             await EndPointNoValido(req, res);
