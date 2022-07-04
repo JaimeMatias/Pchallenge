@@ -1,11 +1,10 @@
 const mongoose =require('mongoose');
 const ConectarDB =async()=>{
+    // Funcion que me permite conectarme a la base de Datos
+
 try {
     await mongoose.connect(process.env.MONGO_ATLAS,{
-        // useNewUrlParser:true,
-        // useUnifiedTopology:true,
-        // useCreateIndex:true,
-        // useFindAndModify:false,
+
     });
     console.log('Base de Datos Conectada Correctamente');
 } catch (error) {
