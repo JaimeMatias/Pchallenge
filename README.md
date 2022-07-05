@@ -55,9 +55,14 @@ Por ejemplo, si hay 100 llamados desde la misma ciudad por hora, si nosotros def
 ## Prueba Local 
 Para probar localmente el entregable, es necesario, abrir una consola de comando en la misma carpta en la que se descargó este proyecto y ejecutar:  
 ```
-npm -i package.json 
+git init  
+git pull https://github.com/JaimeMatias/Pchallenge.git  
+npm install package.json 
 ```
 Tambien va a ser necesario que se renombre el documento **test.env** --> **.env** y que se coloquen en el mismo las claves solicitadas.
+```
+npm start
+```
 ***
 ## Prueba Remota
 Si se desea unicamente probar los EndPoints, se puede consultar a la siguiente ruta:  
