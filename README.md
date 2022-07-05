@@ -12,17 +12,26 @@
 
 ### Información General
 ***
-Estes Repositorio es el resultado de seguir las clases de la capacitación de la Plataforma [Udemy: Node de Cero a Experto](https://www.udemy.com/course/node-de-cero-a-experto/)     
-En el mismo se enseña de lo mas basico de Node hasta llegar a conceptos bastantes avanzados.   
-Tomé este curso con el objetivo de profundizar los conceptos que tengo respecto al desarrollo web(BackEnd)
-  
-  
+Estes Repositorio es el entregable al desfio Tecnico para el rol de Backend Developer de Node.  
+En las siguientes secciones de este documento se detallan las tecnologias utilizadas, las librerias empleadas, así como el enfoque utilizado a la hora del desarrollo.
+
+## Interpretación del Escenario
+En el enunciado se plantean 4 endpoints a implementar, y en base a lo descripto en el enunciado, se desarrollo de la siguinte manera:  
+/v1: Un endpoint basico, el cual no recibe ningun argumento, y que devuelve un mensaje por defecto. No hacepta otro metodo que no sea GET   
+/location: Se interpretó que es otro enpoint basico, el cual extrae de la peticion la IP, y en base a eso, devuelve en la respuesta los datos de la ubicacion. No hacepta otro metodo que no sea GET  
+/current city: Se interpretó que es un endpoint el cual genera ua respuesta en base a si el parametro city se encuentra presente o no.  
+1. Si el parametro city está ausente, va a mostrar la informacion del clima y de la ciudad desde donde se realiza la solicitud
+2. Si el parametro city está presente, va a mostrar la informacion de la ciudad que se va a mostrar  
+/forecast/city: Se interpretó que es un endpoint el cual genera ua respuesta en base a si el parametro city se encuentra presente o no.  
+1. Si el parametro city está ausente, va a mostrar la informacion del clima a 5 dias y de la ciudad desde donde se realiza la solicitud
+2. Si el parametro city está presente, va a mostrar la informacion de la ciudad que se va a mostrar
 ## Tecnologias
 ***
 Las tecnologias a utilizaren este proyecto son:
 * ![Javascript](/img/javascript.png)Javascript  
 * ![NodeJS](/img/node.png) NodeJS  y Framework Express
 * ![MongoDB](/img/mongo.png) MongoDB  
+* ![Heroku](/img/heroku.png) Heroku  
 
   
   
