@@ -4,14 +4,15 @@ const Ciudad = require('../models/city');
 const Clima = require('../models/clima');
 
 const IpToPlace = async (busqueda = Busqueda, ciudad = Ciudad) => {
-    // Meotodo que me permite, a partir de una IP, obtener los datos de la ciudad
+    // Metodo que permite, a partir de una IP, obtener los datos de la ciudad
  
     const { status, city } = await ciudad.BuscarCiudadIP(busqueda.Ip);
     if (status == 'Encontrada') {
+        console.log('Ciudad encontrada en la BD')
         busqueda.data = city;
     } else {
-        // Como es una IP que no tengo guardada, la almacen
-        console.log('intenta obtener la ip')
+        console.log('Ciudad No encontrada en la BD')
+        // Como es una IP que no tengo guardada, la almaceno
         try {
 
             await busqueda.ObtenerIpLocation();

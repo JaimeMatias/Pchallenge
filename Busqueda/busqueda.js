@@ -38,18 +38,16 @@ class Busqueda {
 
     async ObtenerIpLocation() {
         // Me devuelve los datos de la IP desde IPAPI
-        let response={}
+        let response = {}
         try {
-            response= await axios.get(`https://ipapi.co/${this.Ip}/json/`)
+            response = await axios.get(`https://ipapi.co/${this.Ip}/json/`)
         } catch (error) {
-            console.log('Debe generar error');
+
             throw new Error('Falla en la solicitud en IPAPI Bad Query');
         }
-    console.log(response)
         console.log('Pasa por IPapi');
         const { status } = response //Extraigo primero el status para verificar si esta correcto o no
         if (status != 200) {
-            console.log('Debe generar error');
             throw new Error('Falla en la solicitud en IPAPI Sin Informacion');
         }
 
@@ -65,7 +63,14 @@ class Busqueda {
         // Me devuelve los datos actuales del clima desde OPENWEATHER
         const { City, Latitud, Longitud } = this.data;
         console.log('Pasa por OpenWeather current');
-        const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${Latitud}&lon=${Longitud}&appid=${process.env.OpenWeatherMap_Key}&units=${this.unit}`);
+        let response = {}
+        try {
+            response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${Latitud}&lon=${Longitud}&appid=${process.env.OpenWeatherMap_Key}&units=${this.unit}`);
+        } catch (error) {
+
+            throw new Error('Falla en la solicitud en OPENWeather Bad Query');
+        }
+
         const { status } = response //Extraigo primero el status para verificar si esta correcto o no
         if (status != 200) {
             throw new Error('Falla en la solicitud OpenWeather');
@@ -92,7 +97,7 @@ class Busqueda {
             console.log('Debe generar error');
             throw new Error('Falla en la solicitud OpenWeather');
         }
-          //Como ya verifique que esta correcto, puedo extraer los datos y devolverlos
+        //Como ya verifique que esta correcto, puedo extraer los datos y devolverlos
         const { data } = response;
         const { list } = data;
         this.dataClimaFuturo = list;
@@ -100,13 +105,19 @@ class Busqueda {
 
     async ObtenerCoordenadasCiudad(nombre) {
         // Me devuelve los datos de la ciudad  desde MapBox
-        const response = await axios.get(
-            `https://api.mapbox.com/geocoding/v5/mapbox.places/${nombre}.json?access_token=${process.env.MapBox_Key}&limit=1`);
+        let response ={}
+        try {
+            response = await axios.get(
+                `https://api.mapbox.com/geocoding/v5/mapbox.places/${nombre}.json?access_token=${process.env.MapBox_Key}&limit=1`);
+        } catch (error) {
+            throw new Error('Falla en la solicitud en Mapbox Bad Query');
+        }
+        
         console.log('Pasa por Mapbox Presente');
         const { status } = response; //Extraigo primero el status para verificar si esta correcto o no
         if (status != 200) {
             console.log('Debe generar error');
-            throw new Error('Falla en la solicitud');
+            throw new Error('Falla en la solicitud Mapbox');
         }
         const { data } = response;
 

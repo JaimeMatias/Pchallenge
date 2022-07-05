@@ -4,7 +4,8 @@ const Ciudad = require('../models/city');
 const Clima = require('../models/clima');
 
 const CityToPlace = async (cityBuscada, busqueda = Busqueda, ciudad = Ciudad) => {
-    //0 es current, 1 es Forecast
+    // Metodo que permite, a partir de un nombre, obtener los datos de la ciudad
+ 
     const cityFormat = cityBuscada[0].toUpperCase() + cityBuscada.slice(1).toLowerCase();
 
     const { status, city } = await ciudad.BuscarCiudadName(cityFormat);
@@ -13,13 +14,15 @@ const CityToPlace = async (cityBuscada, busqueda = Busqueda, ciudad = Ciudad) =>
         busqueda.data = { City, Latitud, Longitud };
     } else {
         console.log('Se busca la ciudad');
-        await busqueda.ObtenerCoordenadasCiudad(cityFormat);
+        try {
+            await busqueda.ObtenerCoordenadasCiudad(cityFormat);
+        } catch (error) {
+            console.log(error)
+            throw new Error(error);
+        }
+       
         await ciudad.CargarCiudad(busqueda.data)
     };
-
-    console.log(busqueda.data);
-
-
 
 }
 module.exports = { CityToPlace };

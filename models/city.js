@@ -1,12 +1,14 @@
 const CiudadS = require("./DB_Clases/city");
 
 class Ciudad {
+        // Clase encargada de todas las interacciones con la DB de la clase clima
+
     constructor() {
-        this.mockName='Nombre Mock';
         this.city={};
     };
 
     async CargarCiudad(data) {
+        //Guardar el clima en la BD
         const city = new CiudadS(data);
 
         await city.save();
@@ -14,6 +16,7 @@ class Ciudad {
     }
 
     async BuscarCiudadIP(ip){
+        //Busca en la BD una ciudad por IP
         const IpSolicitud=ip;
         try {
             const city = await CiudadS.findOne({IpSolicitud});
@@ -30,7 +33,9 @@ class Ciudad {
         }
         return {status:'Encontrada',city:this.city};
     }
+
     async BuscarCiudadName(name){
+        //Busca en la BD una ciudad por nombre
         const City=name
        
         console.log(`La ciudad con la letra minuscula: ${City}`)

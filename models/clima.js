@@ -5,7 +5,7 @@ class Clima {
 
     constructor(City) {
         this.mockWeather = 'cloudy';
-        this.ciudad = City;
+        this.ciudad = City; //El nombre de la Ciudad a buscar
         this.id = '';
         this.cityDB = {};
         this.FechaUltimaActualizacion = Date();
@@ -33,7 +33,7 @@ class Clima {
     };
 
 
-    async BuscarCiudad() {
+    async BuscarCiudadDB() {
         try {
             this.cityDB = await Climas.findOne({ City: this.ciudad });
         } catch (error) {
