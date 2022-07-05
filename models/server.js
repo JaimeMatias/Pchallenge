@@ -24,7 +24,7 @@ class Server {
 
     routes() {
         //Rutas Validas
-        this.app.use('/v1', require("../routes/location"));
+        this.app.use('/v1', require("../routes/base"));
         this.app.use('/v1/location', require("../routes/location"));
         this.app.use('/v1/current', require("../routes/current"));
         this.app.use('/v1/forecast', require("../routes/forecast"));

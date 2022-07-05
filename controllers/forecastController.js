@@ -13,7 +13,7 @@ const ForcastGet = async (req, res = response) => {
     //Devuelve los datos de ubicación city o la ubicación actual según ip-api y el estado del tiempo actual.
 
     const { city } = req.query;
-    const { id } = req.params;
+
     const buscar = new Busqueda(req);
     const ciudad = new Ciudad();
     if (city != undefined) {//Ingresaron el parametro City

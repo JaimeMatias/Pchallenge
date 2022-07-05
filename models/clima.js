@@ -14,6 +14,7 @@ class Clima {
     };
 
     async CargarNuevoClima(climaActual) {
+        //Guardar el clima en la BD
         const nuevoClima = {
             ...climaActual,
             FechaUltimaActualizacionCurrent: this.FechaUltimaActualizacion,
