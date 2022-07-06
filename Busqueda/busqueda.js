@@ -30,15 +30,18 @@ class Busqueda {
         //Si la IP es externa, actualiza el valor en la clase
         const ipInfo = ipware(req);
         const { clientIp } = ipInfo;
-        if (clientIp != '::1') {
+
+        if (clientIp != '::1' && clientIp != '::ffff:127.0.0.1') {
             this.Ip = clientIp;
         }
+
     }
 
 
     async ObtenerIpLocation() {
         // Me devuelve los datos de la IP desde IPAPI
         let response = {}
+
         try {
             response = await axios.get(`https://ipapi.co/${this.Ip}/json/`)
         } catch (error) {
@@ -64,6 +67,7 @@ class Busqueda {
         const { City, Latitud, Longitud } = this.data;
         console.log('Pasa por OpenWeather current');
         let response = {}
+
         try {
             response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${Latitud}&lon=${Longitud}&appid=${process.env.OpenWeatherMap_Key}&units=${this.unit}`);
         } catch (error) {
@@ -105,14 +109,14 @@ class Busqueda {
 
     async ObtenerCoordenadasCiudad(nombre) {
         // Me devuelve los datos de la ciudad  desde MapBox
-        let response ={}
+        let response = {}
         try {
             response = await axios.get(
                 `https://api.mapbox.com/geocoding/v5/mapbox.places/${nombre}.json?access_token=${process.env.MapBox_Key}&limit=1`);
         } catch (error) {
             throw new Error('Falla en la solicitud en Mapbox Bad Query');
         }
-        
+
         console.log('Pasa por Mapbox Presente');
         const { status } = response; //Extraigo primero el status para verificar si esta correcto o no
         if (status != 200) {
