@@ -10,6 +10,7 @@
 5. [Motivo Utilizacion Base de Datos](#motivo-utilizacion-base-de-datos)
 6. [Prueba Local](#prueba-local)
 7. [Prueba Remota](#prueba-remota)
+8.[Pruebas del Codigo]
   
 ***
 ## Información General
@@ -21,17 +22,17 @@ En las siguientes secciones de este documento se detallan las tecnologias utiliz
 
 En el enunciado se plantean 4 endpoints a implementar, y en base a lo descripto en el enunciado, se desarrollo de la siguinte manera:  
 ### /v1
-Un endpoint basico, el cual no recibe ningun argumento, y que devuelve un mensaje por defecto. No hacepta otro metodo que no sea GET   
+Un endpoint basico, el cual no recibe ningun argumento, y que devuelve un mensaje por defecto. No hacepta otro metodo que no sea GET.   
 ### /v1/location
- Se interpretó que es otro enpoint basico, el cual extrae de la peticion la IP, y en base a eso, devuelve en la respuesta los datos de la ubicacion. No hacepta otro metodo que no sea GET  
+ Se interpretó que es otro enpoint basico, el cual extrae de la peticion la IP, y en base a eso, devuelve en la respuesta los datos de la ubicacion. No hacepta otro metodo que no sea GET.  
 ### /v1/current city
  Se interpretó que es un endpoint el cual genera ua respuesta en base a si el parametro **city** se encuentra presente o no.  
-1. Si el parametro **city** está ausente, va a mostrar la informacion del clima y de la ciudad desde donde se realiza la solicitud
-2. Si el parametro **city** está presente, va a mostrar la informacion de la ciudad que se va a mostrar  
+1. Si el parametro **city** está ausente, va a mostrar la informacion del clima y de la ciudad desde donde se realiza la solicitud.
+2. Si el parametro **city** está presente, va a mostrar la informacion de la ciudad que se va a mostrar.  
 ### /v1/forecast/city:
  Se interpretó que es un endpoint el cual genera ua respuesta en base a si el parametro **city** se encuentra presente o no.  
-1. Si el parametro **city** está ausente, va a mostrar la informacion del clima a 5 dias y de la ciudad desde donde se realiza la solicitud
-2. Si el parametro **city** está presente, va a mostrar la informacion de la ciudad que se va a mostrar
+1. Si el parametro **city** está ausente, va a mostrar la informacion del clima a 5 dias y de la ciudad desde donde se realiza la solicitud.
+2. Si el parametro **city** está presente, va a mostrar la informacion de la ciudad que se va a mostrar.
 ***
 ## Tecnologias
 Las tecnologias a utilizaren este proyecto son:
@@ -67,3 +68,15 @@ npm start
 ## Prueba Remota
 Si se desea unicamente probar los EndPoints, se puede consultar a la siguiente ruta:  
 [PersonalChallenge](https://personalchallenge.herokuapp.com/v1)
+***
+## Pruebas Codigo
+Para realizar las pruebas sobre el codigo, es necesario, abrir una consola de comando en la misma carpta en la que se descargó este proyecto y luego de haber instalado las dependecias requeridas en el documento package.json ejecutar.
+```
+npm run Test
+```
+
+Estas pruebas se encargan de verificar los distintos aspectos funcionales que los  controladores deben cumplir.  
+Entendiendo se por:
+1. Verificar que la aplicacion maneje correctamente los metodos no habilitados en los distintos EndPoint.
+2. Verificar que la aplicacion maneje correctamente la respuesta frente a rutas no existentes.
+3. Que devuelva la informacion correcta dependiendo el Endpoint Solicitado.
