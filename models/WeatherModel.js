@@ -1,70 +1,83 @@
 const weatherDB = require("./DB_Clases/Weather");
-
+/**Class in charge of all interactions with the DB of the weather class
+ * 
+ */
 class WeatherModel {
-    // Clase encargada de todas las interacciones con la DB de la clase clima
 
+/**
+ * @constructor
+ * @param City - Name of the city we want to know the weather
+ */
     constructor(City) {
-        this.mockWeather = 'cloudy';
-        this.ciudad = City; //El nombre de la Ciudad a buscar
+        this.ciudad = City; 
         this.id = '';
         this.cityDB = {};
         this.DateLastupdateForecast = Date();
 
 
     };
-
-    async SaveWeather(climaActual) {
-        //Guardar el clima en la BD
-        const nuevoClima = {
-            ...climaActual,
+/**
+ * Save the Weather in the DB
+ * @async
+ * @function SaveWeather
+ * @param currentWeather - The object that has all the information of the current Weather
+ */
+    async SaveWeather(currentWeather) {
+      
+        const newWeather = {
+            ...currentWeather,
             DateLastupdateCurrent: this.DateLastupdateForecast,
         };
 
-        const clima = new weatherDB(nuevoClima);
+        const weather = new weatherDB(newWeather);
 
 
-        this.id = clima._id;
+        this.id = weather._id;
         try {
-            await clima.save();
+            await weather.save();
         } catch (error) {
-            throw new Error('No se pudo acceder a la base de datos');
+            throw new Error('Database could not be accessed');
         };
 
-        console.log('Clima guardada');
+        console.log('Weather added to the DB');
     };
 
-
+/**
+ * Search for the Weather of a City in the DB
+ * @async
+ * @function SearchWeather
+ */
     async SearchWeather() {
         try {
             this.cityDB = await weatherDB.findOne({ City: this.ciudad });
         } catch (error) {
-            throw new Error('No se pudo crear el objeto en la base de datos');
+            throw new Error('Could not create object in database');
         };
 
         if (!this.cityDB) {
-
-            //     console.log('La ciudad existe en la base de datos')
-            //   const city=this.city
             return { statusClima: 'No FoundDB', city: null };
         };
         this.id = this.cityDB._id;
         return { statusClima: 'FoundDB', cityDB: this.cityDB };
     }
-    
-    async UpdateWeather(Clima,id=''){
-        if(id==''){
-            await weatherDB.findByIdAndUpdate(this.id, { ForecastWeather: Clima, DateLastupdateForecast: this.DateLastupdateForecast });
-        console.log('Clima Futuro Actualizado');
-        }else{
-            await weatherDB.findByIdAndUpdate(id, { Clima, DateLastupdateCurrent: this.DateLastupdateForecast });
-            console.log('Clima Actual Actualizado');
+
+/**
+ * Update  the Weather of a City in the DB
+ * @async
+ * @function UpdateWeather
+ * @param weather - The information to be saved in the DB
+ * @param id - The ID of the Entity to Update
+ */
+    async UpdateWeather(weather, id = '') {
+        if (id == '') {
+            await weatherDB.findByIdAndUpdate(this.id, { ForecastWeather: weather, DateLastupdateForecast: this.DateLastupdateForecast });
+            console.log('Forecast Weather Updated');
+        } else {
+            await weatherDB.findByIdAndUpdate(id, { weather, DateLastupdateCurrent: this.DateLastupdateForecast });
+            console.log('Current Weather Updated');
         }
 
     };
 };
-
-
-
-
 
 module.exports = WeatherModel;
