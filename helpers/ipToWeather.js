@@ -1,8 +1,8 @@
 
-const Busqueda = require('../Busqueda/busqueda');
+const Search = require('../Busqueda/busqueda');
 const Clima = require('../models/clima');
 
-const IpToWeather = async (busqueda = Busqueda, clima = Clima, type = 0) => {
+const IpToWeather = async (busqueda = Search, clima = Clima, type = 0) => {
     // Metodo que permite, a partir de una IP, obtener el clima de una ciudad
     // type 0 es para el Endpoint Current
     // Type 1 es para el Endpoit Forecast

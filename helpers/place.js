@@ -1,7 +1,7 @@
-const Busqueda = require('../Busqueda/busqueda');
-const Ciudad = require('../models/city');
+const Search = require('../Search/search');
+const CityModel = require('../models/cityModel');
 
-const getPlace = async (search = Busqueda, cityNew = Ciudad, cityInput = '') => {
+const GetPlace = async (search = Search, cityNew = CityModel, cityInput = '') => {
     try {
         if (cityInput == '') {
             const { status, city } = await cityNew.SearchCity(search.Ip);
@@ -11,7 +11,7 @@ const getPlace = async (search = Busqueda, cityNew = Ciudad, cityInput = '') => 
                 console.log('Looking for the city')
                 // Como es una IP que no tengo guardada, la almaceno
                 await search.ObtenerIpLocation();
-                cityNew.CargarCiudad(search.data);
+                cityNew.SaveCity(search.data);
             }
 
         } else {
@@ -24,7 +24,7 @@ const getPlace = async (search = Busqueda, cityNew = Ciudad, cityInput = '') => 
             } else {
                 console.log('Looking for the city');
                 await search.ObtenerCoordenadasCiudad(cityFormat);
-                cityNew.CargarCiudad(search.data)
+                cityNew.SaveCity(search.data)
             };
         }
     } catch (error) {
@@ -35,4 +35,4 @@ const getPlace = async (search = Busqueda, cityNew = Ciudad, cityInput = '') => 
 
 };
 
-module.exports = { getPlace };
+module.exports = { GetPlace };

@@ -1,55 +1,43 @@
 const { response } = require('express');
-const Busqueda = require('../Busqueda/busqueda');
-const { CityToPlace } = require('../helpers/cityToPlace');
-const { IpToWeather } = require('../helpers/ipToWeather');
-const { IpToPlace } = require('../helpers/ipToPlace');
-const Ciudad = require('../models/city');
-const Clima = require('../models/clima');
+const Search = require('../Search/search');
+const CityModel = require('../models/cityModel');
+const WeatherModel = require('../models/WeatherModel');
 
-const { EndPointNoValido } = require('./notValidController');
+const { GetPlace } = require('../helpers/place');
+const { GetWeather } = require('../helpers/weather');
 
+/**
+ * Generate a message when the End Point is the Forcast
+ *   Returns the location data of the city according or current location based on ip-api and Forecast weather
+ * @async
+ * @function CurrentGet
+ * @param req - The Request to the Server
+ * @param res - The Response from the Server
+ */
 const ForcastGet = async (req, res = response) => {
-    //Metodo del endpoint Forcast,
-    //Devuelve los datos de ubicación city o la ubicación actual según ip-api y el estado del tiempo actual.
-
     const { city } = req.query;
-
-    const buscar = new Busqueda(req);
-    const ciudad = new Ciudad();
-    if (city != undefined) {//Ingresaron el parametro City
-        //Devuelve los datos de ubicación city
-
-        try {
-            await CityToPlace(city, buscar, ciudad);
-        } catch (error) {
-            res.status(400).json({ msg: 'Estamos teniendo Inconvenientes, Intente mas Tarde' })
-            return
+    const search = new Search(req);
+    const cityC = new CityModel();
+    try {
+        if (city != undefined) {//Ingresaron el parametro City
+            //Devuelve los datos de ubicación city
+            await GetPlace(search, cityC,city);
+            res.json(search.data);
+        } else {
+            //Devuelve la ubicación actual según ip-api y el estado del tiempo Futuro
+            await GetPlace(search, cityC);
+            const weather = new WeatherModel(search.data.City);
+            await GetWeather(search, weather, 1);
+            const { City, Longitud, Latitud } = search.data;
+            const ForecastWeather = search.dataClimaFuturo;
+            res.json({ City, Longitud, Latitud, ForecastWeather });
         };
+    } catch (error) {
+        // console.log(error)
+        res.status(400).json({ msg: 'Estamos teniendo Inconvenientes, Intente mas Tarde' })
+        return
+    }
 
-
-        res.json(buscar.data);
-    } else {
-        //Devuelve la ubicación actual según ip-api y el estado del tiempo Futuro
-        try {
-            await IpToPlace(buscar, ciudad);
-        } catch (error) {
-            res.status(400).json({ msg: 'Estamos teniendo Inconvenientes, Intente mas Tarde' })
-            return
-        };
-
-        const clima = new Clima(buscar.data.City);
-        try {
-            await IpToWeather(buscar, clima, 1);
-        } catch (error) {
-            res.status(400).json({ msg: 'Estamos teniendo Inconvenientes, Intente mas Tarde' })
-            return
-        }
-        const { City, Longitud, Latitud } = buscar.data;
-
-        const ForecastWeather = buscar.dataClimaFuturo;
-        res.json({ City, Longitud, Latitud, ForecastWeather });
-
-    };
 
 
 }

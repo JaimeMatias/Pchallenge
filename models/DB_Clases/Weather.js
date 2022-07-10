@@ -33,10 +33,10 @@ const WeatherSchema = Schema({
     clouds: {
         type: Array,
     },
-    FechaUltimaActualizacionCurrent: {
+    DateLastupdateCurrent: {
         type: Date,
     },
-    FechaUltimaActualizacionForecast: {
+    DateLastupdateForecast: {
         type: Date,
     },
     ForecastWeather: {

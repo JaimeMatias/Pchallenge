@@ -1,7 +1,7 @@
 const { response } = require('express');
-const Busqueda = require('../Busqueda/busqueda');
-const Ciudad = require('../models/city');
-const { getPlace } = require('../helpers/place');
+const Search = require('../Search/search');
+const CityModel = require('../models/cityModel');
+const { GetPlace } = require('../helpers/place');
 
 /**
  * Generate a message when the End Point is the Location,  Returns the location data of the city according to ip-api
@@ -11,12 +11,13 @@ const { getPlace } = require('../helpers/place');
  * @param res - The Response from the Server
  */
 const LocationGet = async (req, res = response) => {
-    const search = new Busqueda(req);
-    const city = new Ciudad();
+    const search = new Search(req);
+    const city = new CityModel();
    
     try {
-        await getPlace(search, city);
+        await GetPlace(search, city);
     } catch (error) {
+        console.log(error)
          res.status(400).json({msg:'We are having problems, please try again later'})
          return
     };

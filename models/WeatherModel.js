@@ -1,6 +1,6 @@
-const weatherDB = require("./DB_Clases/clima");
+const weatherDB = require("./DB_Clases/Weather");
 
-class Clima {
+class WeatherModel {
     // Clase encargada de todas las interacciones con la DB de la clase clima
 
     constructor(City) {
@@ -8,16 +8,16 @@ class Clima {
         this.ciudad = City; //El nombre de la Ciudad a buscar
         this.id = '';
         this.cityDB = {};
-        this.FechaUltimaActualizacion = Date();
+        this.DateLastupdateForecast = Date();
 
 
     };
 
-    async CargarNuevoClima(climaActual) {
+    async SaveWeather(climaActual) {
         //Guardar el clima en la BD
         const nuevoClima = {
             ...climaActual,
-            FechaUltimaActualizacionCurrent: this.FechaUltimaActualizacion,
+            DateLastupdateCurrent: this.DateLastupdateForecast,
         };
 
         const clima = new weatherDB(nuevoClima);
@@ -34,7 +34,7 @@ class Clima {
     };
 
 
-    async BuscarCiudadDB() {
+    async SearchWeather() {
         try {
             this.cityDB = await weatherDB.findOne({ City: this.ciudad });
         } catch (error) {
@@ -45,20 +45,21 @@ class Clima {
 
             //     console.log('La ciudad existe en la base de datos')
             //   const city=this.city
-            return { statusClima: 'No Encontrada', city: null };
+            return { statusClima: 'No FoundDB', city: null };
         };
         this.id = this.cityDB._id;
-        return { statusClima: 'Encontrada', cityDB: this.cityDB };
+        return { statusClima: 'FoundDB', cityDB: this.cityDB };
     }
-    async ActualizarClimaActual(climaActual, id) {
-        await weatherDB.findByIdAndUpdate(id, { climaActual, FechaUltimaActualizacionCurrent: this.FechaUltimaActualizacion });
-        console.log('Clima Actual Actualizado');
-    };
-
-
-    async ActualizarClimaFuturo(ClimaFuturo) {
-        await weatherDB.findByIdAndUpdate(this.id, { ForecastWeather: ClimaFuturo, FechaUltimaActualizacionForecast: this.FechaUltimaActualizacion });
+    
+    async UpdateWeather(Clima,id=''){
+        if(id==''){
+            await weatherDB.findByIdAndUpdate(this.id, { ForecastWeather: Clima, DateLastupdateForecast: this.DateLastupdateForecast });
         console.log('Clima Futuro Actualizado');
+        }else{
+            await weatherDB.findByIdAndUpdate(id, { Clima, DateLastupdateCurrent: this.DateLastupdateForecast });
+            console.log('Clima Actual Actualizado');
+        }
+
     };
 };
 
@@ -66,4 +67,4 @@ class Clima {
 
 
 
-module.exports = Clima;
+module.exports = WeatherModel;

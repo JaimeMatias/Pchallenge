@@ -3,7 +3,8 @@ const axios = require('axios').default;
 const ipware = require('ipware')().get_ip;
 require('dotenv').config();
 
-class Busqueda {
+class Search {
+
 
     // Clase que realiza las distintas busquedas a los distintos Endpoins en Internet para traer la informacion
     //Estos endpoint son
@@ -22,9 +23,9 @@ class Busqueda {
         this.unit = 'metric';
         this.cnt = 24;
 
-        this.ObtenerIP(req);
+        this.GetIP(req);
     }
-    async ObtenerIP(req) {
+    async GetIP(req) {
         // Me devuelve la IP desde donde se realiza el request
         // Si la IP es interna, continuamos con la por defecto
         //Si la IP es externa, actualiza el valor en la clase
@@ -140,4 +141,4 @@ class Busqueda {
     };
 };
 
-module.exports = Busqueda;
+module.exports = Search;
