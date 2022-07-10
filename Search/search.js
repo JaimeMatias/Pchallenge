@@ -3,26 +3,28 @@ const axios = require('axios').default;
 const ipware = require('ipware')().get_ip;
 require('dotenv').config();
 
+/**
+ * Class that performs the different searches to the different Endpoints on the Internet to bring the information
+ * These endpoints are
+ * IPAPI to obtain the geographic data by means of the IP of the equipment that makes a request to the server
+ * OPENWEATHER to obtain the weather using the geographical data obtained from the equipment that makes the request to the server
+ * MAPBOX to obtain the geographic data by means of a name (city) obtained from the request to the server
+ */
 class Search {
-
-
-    // Clase que realiza las distintas busquedas a los distintos Endpoins en Internet para traer la informacion
-    //Estos endpoint son
-    //IPAPI para obtener los datos geograficos mendiante la IP del equipo que realiza una solicitud al servidor
-    //OPENWEATHER para obtener el clima mediante los datos geograficos  obtenidos del equipo que realiza la solicitud al servidor
-    //MAPBOX para obtener los datos geograficos mediante un nombre(ciudad) obtenidos de la solicitud al servidor
-
+/**
+ * @constructor
+ * @param req  - The Request to the Server
+ */
     constructor(req) {
-        this.Ip = process.env.IP_Salida; //Cuando la consulta se hace con una IP privada, algunos servicios externos no funcionan correctamente,
-        //Por lo tanto se setea como IP por defecto la que figura en el .env
+        this.Ip = process.env.IP_Salida; //When the query is made with a private IP, some external services do not work correctly,
+        //Therefore, the IP that appears in the .env is set as the default IP
 
-        this.data = {}; //Informacion de la ciudad obtenida de Ipapi
+        this.data = {}; //City information obtained from Ipapi
 
-        this.dataClimaActual = {}; //Informacion del clima Actual obtenido desde OpenWeather
-        this.dataClimaFuturo = {}; //Informacion del clima Futuro  obtenido desde OpenWeather
+        this.CurrentWeather = {}; //Current weather information obtained from OpenWeather
+        this.ForecastWeather = {}; //Forecast weather information obtained from OpenWeather
         this.unit = 'metric';
         this.cnt = 24;
-
         this.GetIP(req);
     }
     async GetIP(req) {
@@ -88,7 +90,7 @@ class Search {
 
         //Renombro los campos para que coincidan con los nombre de mi BD
         const { main: temperature, visibility, wind, clouds } = data;
-        this.dataClimaActual = { City, Longitud, Latitud, main, description, temperature, visibility, wind, clouds };
+        this.CurrentWeather = { City, Longitud, Latitud, main, description, temperature, visibility, wind, clouds };
     }
 
     async ObtenerClimaFuturo() {
@@ -106,7 +108,7 @@ class Search {
         //Como ya verifique que esta correcto, puedo extraer los datos y devolverlos
         const { data } = response;
         const { list } = data;
-        this.dataClimaFuturo = list;
+        this.ForecastWeather = list;
     }
 
     async ObtenerCoordenadasCiudad(nombre) {

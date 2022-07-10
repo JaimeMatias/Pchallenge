@@ -29,7 +29,7 @@ const ForcastGet = async (req, res = response) => {
             const weather = new WeatherModel(search.data.City);
             await GetWeather(search, weather, 1);
             const { City, Longitud, Latitud } = search.data;
-            const ForecastWeather = search.dataClimaFuturo;
+            const ForecastWeather = search.ForecastWeather;
             res.json({ City, Longitud, Latitud, ForecastWeather });
         };
     } catch (error) {

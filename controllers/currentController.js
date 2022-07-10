@@ -27,7 +27,7 @@ const CurrentGet = async (req, res = response) => {
             await GetPlace(search, cityC);
             const weather = new WeatherModel(search.data.City);
             await GetWeather(search, weather, 0);
-            res.json(search.dataClimaActual);
+            res.json(search.CurrentWeather);
         };
     } catch (error) {
         res.status(400).json({ msg: 'Estamos teniendo Inconvenientes, Intente mas Tarde' })
