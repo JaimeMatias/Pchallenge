@@ -1,9 +1,13 @@
 const express = require('express');
 const router = express.Router();
-//Generara  ENDPOINT no valido , cuando llegue cualquier peticion que no sea un Get, o cuya ruta no es de las definidas
+/**
+ * Generate an Error Message when the API request is not a valid one
+ * @param req - The Request to the Server
+ * @param res - The Response from the Server
+ */
 router.all('/*', (req,res) => {
-    console.log('Mal Funciona');
-    res.status(400).json(`El endpoint al que quieres acceder no es uno valido`);
+    console.log('Wrong Attempt ');
+    res.status(400).json(`The endpoint you want to access is not a valid one`);
 })
 
 

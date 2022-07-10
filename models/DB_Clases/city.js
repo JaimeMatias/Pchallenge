@@ -1,31 +1,31 @@
 const { Schema, model } = require('mongoose');
 
-//Clase Ciudad de la BD
-// La misma guarda la informacion que debe ser devuelta cuando se realice una consulta a la ciudad
-
+/**
+ * Schema of a City, I will save the information so that it can be acceded easily later
+ */
 const CitySchema = Schema({
     IpSolicitud: {
         type: String,
     },
     City: {
         type: String,
-        required: [true, 'La Ciudad es obligatoria']
+        required: [true, 'The city is mandatory']
     },
     Latitud: {
         type: Number,
-        required: [true, 'La Latitud es obligatoria']
+        required: [true, 'The Latitud is mandatory']
     },
     Longitud: {
         type: Number,
-        required: [true, 'La Longitud es obligatoria']
+        required: [true, 'The Longitud is mandatory']
     },
 
 });
 
 CitySchema.methods.toJSON= function(){
-    const {_id,__v,estado,...resto}=this.toObject(); // Extraigo los datos del ID y de la Version de la respuesta obtenida de la BD
+    const {_id,__v,estado,...resto}=this.toObject(); //Extract the ID and Version so they do not appear in the response
     const uid=_id;
-    const ciudad={...resto};
-    return ciudad;
+    const city={...resto};
+    return city;
 };
-module.exports = model('CiudadS', CitySchema);
+module.exports = model('cityDB', CitySchema);

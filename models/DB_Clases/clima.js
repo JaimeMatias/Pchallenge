@@ -1,7 +1,8 @@
 const { Schema, model } = require('mongoose');
-//Clase Ciudad de la BD
-// La misma guarda la informacion que debe ser devuelta cuando se realice una consulta a la ciudad
-const ClimaSchema = Schema({
+/**
+ * Schema of the Weather, I will save the information so that it can be acceded easily later
+ */
+const WeatherSchema = Schema({
     City: {
         type: String,
 
@@ -19,7 +20,7 @@ const ClimaSchema = Schema({
     description: {
         type: String,
     },
-    temperatura: {
+    temperature: {
         type: Array,
     },
     visibility: {
@@ -44,20 +45,19 @@ const ClimaSchema = Schema({
     }
 
 })
-ClimaSchema.methods.toJSON = function () {
+WeatherSchema.methods.toJSON = function () {
 
-    // Extraigo los datos del ID y de la Version de la respuesta obtenida de la BD
-    let { _id, City, Latitud, Longitud, main, description, temperatura, visibility, wind, clouds } = this.toObject();
+    let { _id, City, Latitud, Longitud, main, description, temperature, visibility, wind, clouds } = this.toObject();
 
-    //Desestructuracion de algunos objetos para que se vea igual la informacion obtenida por OpenWeather y lo que se encuentra en mi DB
-    const { temp, feels_like, temp_min, temp_max, pressure, humidity } = temperatura[0];
-    temperatura = { temp, feels_like, temp_min, temp_max, pressure, humidity };
+    //Destructuring of some objects so that the information obtained by OpenWeather and what is in the DB look the same
+    const { temp, feels_like, temp_min, temp_max, pressure, humidity } = temperature[0];
+    temperature = { temp, feels_like, temp_min, temp_max, pressure, humidity };
     const { speed, deg } = wind[0];
     wind = { speed, deg };
     const { all } = clouds[0];
     clouds = { all };
 
-    const clima = { City, Latitud, Longitud, main, description, temperatura, visibility, wind, clouds };
-    return clima;
+    const weather = { City, Latitud, Longitud, main, description, temperature, visibility, wind, clouds };
+    return weather;
 }
-module.exports = model('Climas', ClimaSchema);
+module.exports = model('weatherDB', WeatherSchema);

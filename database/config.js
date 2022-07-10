@@ -1,16 +1,22 @@
 const mongoose =require('mongoose');
-const ConectarDB =async()=>{
+
+/**Conect to a MongoBD database using the connection String provided in th .env
+ * @async
+ * @function ConectDB
+ */
+const ConectDB =async()=>{
     // Funcion que me permite conectarme a la base de Datos
 
 try {
     await mongoose.connect(process.env.MONGO_ATLAS,{
 
     });
-    console.log('Base de Datos Conectada Correctamente');
+    console.log('Database Connected Correctly');
 } catch (error) {
-    throw new Error('Error a la hora de iniciar la base de datos Verificar cadena de conexion o Conectividad');
+    throw new Error('Failed to start database Verify connection string or Connectivity');
 };
+
 };
 module.exports={
-    ConectarDB
+    ConectDB
 };

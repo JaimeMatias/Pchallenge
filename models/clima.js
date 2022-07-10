@@ -1,4 +1,4 @@
-const Climas = require("./DB_Clases/clima");
+const weatherDB = require("./DB_Clases/clima");
 
 class Clima {
     // Clase encargada de todas las interacciones con la DB de la clase clima
@@ -20,7 +20,7 @@ class Clima {
             FechaUltimaActualizacionCurrent: this.FechaUltimaActualizacion,
         };
 
-        const clima = new Climas(nuevoClima);
+        const clima = new weatherDB(nuevoClima);
 
 
         this.id = clima._id;
@@ -36,7 +36,7 @@ class Clima {
 
     async BuscarCiudadDB() {
         try {
-            this.cityDB = await Climas.findOne({ City: this.ciudad });
+            this.cityDB = await weatherDB.findOne({ City: this.ciudad });
         } catch (error) {
             throw new Error('No se pudo crear el objeto en la base de datos');
         };
@@ -51,13 +51,13 @@ class Clima {
         return { statusClima: 'Encontrada', cityDB: this.cityDB };
     }
     async ActualizarClimaActual(climaActual, id) {
-        await Climas.findByIdAndUpdate(id, { climaActual, FechaUltimaActualizacionCurrent: this.FechaUltimaActualizacion });
+        await weatherDB.findByIdAndUpdate(id, { climaActual, FechaUltimaActualizacionCurrent: this.FechaUltimaActualizacion });
         console.log('Clima Actual Actualizado');
     };
 
 
     async ActualizarClimaFuturo(ClimaFuturo) {
-        await Climas.findByIdAndUpdate(this.id, { ForecastWeather: ClimaFuturo, FechaUltimaActualizacionForecast: this.FechaUltimaActualizacion });
+        await weatherDB.findByIdAndUpdate(this.id, { ForecastWeather: ClimaFuturo, FechaUltimaActualizacionForecast: this.FechaUltimaActualizacion });
         console.log('Clima Futuro Actualizado');
     };
 };

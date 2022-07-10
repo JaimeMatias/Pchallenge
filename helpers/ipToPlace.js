@@ -8,7 +8,7 @@ const IpToPlace = async (busqueda = Busqueda, ciudad = Ciudad) => {
  
     const { status, city } = await ciudad.BuscarCiudadIP(busqueda.Ip);
     if (status == 'Encontrada') {
-        console.log('Ciudad encontrada en la BD')
+        console.log('Ciudad encontrada en la BD ', status)
         busqueda.data = city;
     } else {
         console.log('Ciudad No encontrada en la BD')

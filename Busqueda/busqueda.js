@@ -85,8 +85,8 @@ class Busqueda {
         const { main, description } = data.weather[0];
 
         //Renombro los campos para que coincidan con los nombre de mi BD
-        const { main: temperatura, visibility, wind, clouds } = data;
-        this.dataClimaActual = { City, Longitud, Latitud, main, description, temperatura, visibility, wind, clouds };
+        const { main: temperature, visibility, wind, clouds } = data;
+        this.dataClimaActual = { City, Longitud, Latitud, main, description, temperature, visibility, wind, clouds };
     }
 
     async ObtenerClimaFuturo() {

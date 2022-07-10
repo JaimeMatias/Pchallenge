@@ -1,4 +1,4 @@
-const CiudadS = require("./DB_Clases/city");
+const cityDB = require("./DB_Clases/city");
 
 class Ciudad {
         // Clase encargada de todas las interacciones con la DB de la clase clima
@@ -9,7 +9,7 @@ class Ciudad {
 
     async CargarCiudad(data) {
         //Guardar el clima en la BD
-        const city = new CiudadS(data);
+        const city = new cityDB(data);
 
         await city.save();
         console.log('ciudad guardada');
@@ -19,7 +19,7 @@ class Ciudad {
         //Busca en la BD una ciudad por IP
         const IpSolicitud=ip;
         try {
-            const city = await CiudadS.findOne({IpSolicitud});
+            const city = await cityDB.findOne({IpSolicitud});
             this.city=city;
         } catch (error) {
             throw new Error ('No se pudo acceder a la base de datos');
@@ -38,7 +38,7 @@ class Ciudad {
         //Busca en la BD una ciudad por nombre
         const City=name
         try {
-            const city = await CiudadS.findOne({City});
+            const city = await cityDB.findOne({City});
             this.city=city;
         } catch (error) {
             throw new Error ('No se pudo acceder a la base de datos');

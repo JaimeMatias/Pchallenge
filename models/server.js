@@ -1,52 +1,63 @@
 const express = require('express');
 require('dotenv').config();
-const { ConectarDB } = require('../database/config');
+const { ConectDB } = require('../database/config');
 
 const router = express.Router();
+/**
+ * Creates a new Server, and the one in charge of orchestrating the entire system
+ * @class
+ */
 
+/** @ */
+/**
+ * 
+ */
 class Server {
-    //Clase Servidor y la encargada de orquestar todo el sistema
+    /** @constructor */
     constructor() {
         this.app = express();
         this.port = process.env.PORT;
 
-        //Conectar a base de Datos
-        this.ConectarDB();
+        this.ConectDB(); //Conect the DB
 
-        //Rutas de mi aplicacion
-        this.routes();
+        this.routes(); //Server's Route
     };
 
     // Middlewares
     middlewares() {
-
     };
 
+    /** List all the available API's Routes as well as the exception when the route is not valid */
     routes() {
-        //Rutas Validas
+        //Correct Routes
         this.app.use('/v1', require("../routes/base"));
         this.app.use('/v1/location', require("../routes/location"));
         this.app.use('/v1/current', require("../routes/current"));
         this.app.use('/v1/forecast', require("../routes/forecast"));
 
-        //Cualquier otra ruta, se considera invalida
+        //Invalid Routes
         this.app.use('/*', require("../routes/notValid"))
 
     };
-    async ConectarDB() {
+
+    /**
+     * Conect to the DB
+     * @async
+     */
+    async ConectDB() {
         try {
-            await ConectarDB();
+            await ConectDB();
         } catch (error) {
 
             throw new Error(error);
         }
 
     };
-
+    /** Start Listeinig the diferent API Calls */
     listen() {
         this.app.listen(this.port, () => {
 
-            console.log('Inicializando Aplicacion puerto:', this.port);
+            console.log('Start listeing on the port:', this.port);
 
         })
     };
