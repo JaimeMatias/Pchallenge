@@ -73,9 +73,9 @@ describe('Pruebas sobre CurrentController(/v1/current)', () => {
             const { text } = response
             const respuesta = JSON.parse(text)
 
-            const { temperatura } = respuesta
+            const { temperature } = respuesta
             // console.log(JSON.parse(text))
-            assert(temperatura != undefined)
+            assert(temperature != undefined)
         });
 
     });
@@ -110,9 +110,9 @@ describe('Pruebas sobre CurrentController(/v1/current)', () => {
             assert(Longitud != undefined)
         });
         it('Consulta exitosa Temperatura', () => {
-            const { temperatura } = datos
+            const { temperature } = datos
             // console.log(JSON.parse(text))
-            assert(temperatura == undefined)
+            assert(temperature == undefined)
         });
 
     });
@@ -130,9 +130,9 @@ describe('Pruebas sobre CurrentController(/v1/current)', () => {
 
             const { text } = response
             datos = JSON.parse(text)
-            const { temperatura } = datos
+            const { temperature } = datos
             // console.log(JSON.parse(text))
-            assert(temperatura == undefined)
+            assert(temperature == undefined)
         });
 
     });

@@ -60,6 +60,7 @@ class Busqueda {
         //Renombro los campos para que coincidan con los nombre de mi BD
         const { ip: IpSolicitud, city: City, latitude: Latitud, longitude: Longitud } = data;
         this.data = { IpSolicitud, City, Latitud, Longitud };
+
     }
 
     async ObtenerClimaActual() {

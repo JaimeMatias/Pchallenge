@@ -5,6 +5,7 @@ const { IpToWeather } = require('../helpers/ipToWeather');
 const { IpToPlace } = require('../helpers/ipToPlace');
 const Ciudad = require('../models/city');
 const Clima = require('../models/clima');
+const { getPlace } = require('../helpers/place');
 
 
 const CurrentGet = async (req, res = response) => {
@@ -30,7 +31,7 @@ const CurrentGet = async (req, res = response) => {
     } else {
         //Devuelve la ubicación actual según ip-api y el estado del tiempo actual
         try {
-            await IpToPlace(buscar, ciudad);
+            await getPlace(buscar, ciudad);
         } catch (error) {
             res.status(400).json({ msg: 'Estamos teniendo Inconvenientes, Intente mas Tarde' })
             return
