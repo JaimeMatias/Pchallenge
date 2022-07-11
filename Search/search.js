@@ -142,7 +142,7 @@ class Search {
             response = await axios.get(
                 `https://api.mapbox.com/geocoding/v5/mapbox.places/${name}.json?access_token=${process.env.MapBox_Key}&limit=1`);
         } catch (error) {
-            throw new Error('Falla en la solicitud en Mapbox Bad Query');
+            throw new Error('Request failure in Mapbox Bad Query');
         }
 
         console.log('Go through Mapbox Present');

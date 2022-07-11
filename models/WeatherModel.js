@@ -55,10 +55,10 @@ class WeatherModel {
         };
 
         if (!this.cityDB) {
-            return { statusClima: 'No FoundDB', city: null };
+            return { statusWeather: 'No FoundDB', city: null };
         };
         this.id = this.cityDB._id;
-        return { statusClima: 'FoundDB', cityDB: this.cityDB };
+        return { statusWeather: 'FoundDB', cityDB: this.cityDB };
     }
 
 /**

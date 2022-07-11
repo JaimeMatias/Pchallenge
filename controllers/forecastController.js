@@ -33,7 +33,7 @@ const ForcastGet = async (req, res = response) => {
             res.json({ City, Longitud, Latitud, ForecastWeather });
         };
     } catch (error) {
-        res.status(400).json({ msg: 'Estamos teniendo Inconvenientes, Intente mas Tarde' })
+        res.status(400).json({ msg: 'We are having problems, please try again later' })
         return
     }
 
