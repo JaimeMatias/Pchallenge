@@ -3,17 +3,17 @@ const assert = require('assert');
 const request = require('supertest');
 const Server = require('../models/server');
 const server = new Server()
-describe('Pruebas sobre LocationController(/v1/location)', () => {
+describe('tests on LocationController(/v1/location)', () => {
 
 
-    describe("Prueba Metodos No habilitados", () => {
-        it('Mensaje de error con Metodo POST Current', async function () {
+    describe("Test Methods Not Enabled", () => {
+        it('Error message with POST', async function () {
             this.timeout(10000);
             const response = await request(server.app)
                 .post('/v1/location')
                 .expect(400)
         });
-        it('Mensaje de error con Metodo Put Current', async function () {
+        it('Error message with Put', async function () {
             this.timeout(10000);
             const response = await request(server.app)
                 .put('/v1/location')
@@ -21,8 +21,8 @@ describe('Pruebas sobre LocationController(/v1/location)', () => {
         })
     });
 
-    describe("Prueba Ruta no habilitada", () => {
-        it('Mensaje de error JBad Endpoint ', async function () {
+    describe("Test Route not enabled", () => {
+        it('Bad endpoint error message ', async function () {
             this.timeout(10000);
             const response = await request(server.app)
                 .get('/v1/locatio')
@@ -31,7 +31,7 @@ describe('Pruebas sobre LocationController(/v1/location)', () => {
 
     });
 
-    describe("Prueba Exito Sin Parametro City", () => {
+    describe("Test Success Without Parameter City", () => {
         let response = {}
         before(async function () {
             this.timeout(10000);
@@ -40,36 +40,32 @@ describe('Pruebas sobre LocationController(/v1/location)', () => {
                 .expect(200)
                 .expect('Content-Type', /json/)
         });
-        it('Consulta exitosa a City', () => {
+        it('Successful Query to City', () => {
             const { text } = response
             const respuesta = JSON.parse(text)
 
             const { City } = respuesta
-            // console.log(JSON.parse(text))
-            assert(City != undefined, 'La ciudad no tiene valor ')
+            assert(City != undefined)
         });
-        it('Consulta exitosa Latitud', () => {
+        it('Latitude query successful', () => {
             const { text } = response
             const respuesta = JSON.parse(text)
 
             const { Latitud } = respuesta
-            // console.log(JSON.parse(text))
             assert(Latitud != undefined)
         });
-        it('Consulta exitosa Longitud', () => {
+        it('Longitud query successful', () => {
             const { text } = response
             const respuesta = JSON.parse(text)
 
             const { Longitud } = respuesta
-            // console.log(JSON.parse(text))
             assert(Longitud != undefined)
         });
-        it('Consulta exitosa  ipSolicitud', () => {
+        it('Successful query IP', () => {
             const { text } = response
             const respuesta = JSON.parse(text)
 
             const { IpSolicitud } = respuesta
-            // console.log(JSON.parse(text))
             assert(IpSolicitud != undefined)
         });
 

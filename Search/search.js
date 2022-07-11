@@ -159,7 +159,7 @@ class Search {
         } else {
             const Longitud = features[0].center[0];
             const Latitud = features[0].center[1];
-            this.data = { City: nombre, Latitud, Longitud };
+            this.data = { City: name, Latitud, Longitud };
 
         }
 

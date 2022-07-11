@@ -3,17 +3,17 @@ const assert = require('assert');
 const request = require('supertest');
 const Server = require('../models/server');
 const server = new Server()
-describe('Pruebas sobre CurrentController(/v1/current)', () => {
+describe('Tests on CurrentController(/v1/current)', () => {
 
 
-    describe("Prueba Metodos No habilitados", () => {
-        it('Mensaje de error con Metodo POST Current', async function () {
+    describe("Test Methods Not Enabled", () => {
+        it('Error message with POST Current Method', async function () {
             this.timeout(10000);
             const response = await request(server.app)
                 .post('/v1/current')
                 .expect(400)
         });
-        it('Mensaje de error con Metodo Put Current', async function () {
+        it('Error message with Put Current Method', async function () {
             this.timeout(10000);
             const response = await request(server.app)
                 .put('/v1/current')
@@ -21,14 +21,14 @@ describe('Pruebas sobre CurrentController(/v1/current)', () => {
         })
     });
 
-    describe("Prueba Ruta no habilitada", () => {
-        it('Mensaje de error Jerarquia mal City ', async function () {
+    describe("Test Route not enabled", () => {
+        it('Bad Hierarchy City error message ', async function () {
             this.timeout(10000);
             const response = await request(server.app)
                 .get('/v1/current/city')
                 .expect(400)
         });
-        it('Mensaje de error Bad Endpoint ', async function () {
+        it('Bad endpoint error message', async function () {
             this.timeout(10000);
             const response = await request(server.app)
                 .get('/v1/curren')
@@ -36,7 +36,7 @@ describe('Pruebas sobre CurrentController(/v1/current)', () => {
         });
     })
 
-    describe("Prueba Exito Sin Parametro City", () => {
+    describe("Test Success Without Parameter City", () => {
         let response = {}
         before(async function () {
             this.timeout(10000);
@@ -45,44 +45,36 @@ describe('Pruebas sobre CurrentController(/v1/current)', () => {
                 .expect(200)
                 .expect('Content-Type', /json/)
         });
-        it('Consulta exitosa a City', () => {
+        it('Successful Query to City', () => {
             const { text } = response
             const respuesta = JSON.parse(text)
-
-            const { City } = respuesta
-            // console.log(JSON.parse(text))
-            assert(City != undefined, 'La ciudad no tiene valor ')
+            const { City } = respuesta 
+            assert(City != undefined)
         });
-        it('Consulta exitosa Latitud', () => {
+        it('Latitude query successful', () => {
             const { text } = response
             const respuesta = JSON.parse(text)
-
             const { Latitud } = respuesta
-            // console.log(JSON.parse(text))
             assert(Latitud != undefined)
         });
-        it('Consulta exitosa Longitud', () => {
+        it('Longitud query successful', () => {
             const { text } = response
             const respuesta = JSON.parse(text)
-
-            const { Longitud } = respuesta
-            // console.log(JSON.parse(text))
+            const { Longitud } = respuesta           
             assert(Longitud != undefined)
         });
-        it('Consulta exitosa Temperatura', () => {
+        it('Successful query Temperature', () => {
             const { text } = response
             const respuesta = JSON.parse(text)
-
             const { temperature } = respuesta
-            // console.log(JSON.parse(text))
             assert(temperature != undefined)
         });
 
     });
 
-    describe("Prueba Exito con Parametro City", () => {
-        let response = {} //Toda la infomracion obtenida de la consulta
-        let datos = {} //La informacion que realmente necesito
+    describe("Test Success with Parameter City", () => {
+        let response = {} //All the information obtained from the query
+        let datos = {} //The information I really need
         const ciudad = 'Barcelona'
         before(async function () {
             this.timeout(10000);
@@ -94,34 +86,34 @@ describe('Pruebas sobre CurrentController(/v1/current)', () => {
             const { text } = response
             datos = JSON.parse(text)
         });
-        it('Consulta exitosa a City', () => {
+        it('Successful Query to City', () => {
             const { City } = datos
-            // console.log(JSON.parse(text))
-            assert(City != undefined, 'La ciudad no tiene valor ')
+
+            assert(City != undefined)
         });
-        it('Consulta exitosa Latitud', () => {
+        it('Latitude query successful', () => {
             const { Latitud } = datos
-            // console.log(JSON.parse(text))
+
             assert(Latitud != undefined)
         });
-        it('Consulta exitosa Longitud', () => {
+        it('Longitud query successful', () => {
             const { Longitud } = datos
-            // console.log(JSON.parse(text))
+
             assert(Longitud != undefined)
         });
-        it('Consulta exitosa Temperatura', () => {
+        it('Successful query Temperature', () => {
             const { temperature } = datos
-            // console.log(JSON.parse(text))
+
             assert(temperature == undefined)
         });
 
     });
 
-    describe("Prueba Fallidas con Parametro City", () => {
+    describe("Test Fails with Parameter City", () => {
         let response = {} //Toda la infomracion obtenida de la consulta
         const ciudad = 'Barcelona'
 
-        it('Consulta Fallida Temperatura', async function () {
+        it('Query Failed Temperature', async function () {
             this.timeout(10000);
             response = await request(server.app)
                 .get(`/v1/current?city=${ciudad}`)
@@ -131,7 +123,7 @@ describe('Pruebas sobre CurrentController(/v1/current)', () => {
             const { text } = response
             datos = JSON.parse(text)
             const { temperature } = datos
-            // console.log(JSON.parse(text))
+
             assert(temperature == undefined)
         });
 
