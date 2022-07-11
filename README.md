@@ -10,7 +10,7 @@
 5. [Motivo Utilizacion Base de Datos](#motivo-utilizacion-base-de-datos)
 6. [Prueba Local](#prueba-local)
 7. [Prueba Remota](#prueba-remota)
-8.[Pruebas del Codigo](#pruebas-codigo)
+8. [Pruebas del Codigo](#pruebas-codigo)
   
 ***
 ## Información General
