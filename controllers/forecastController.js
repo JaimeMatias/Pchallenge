@@ -19,12 +19,12 @@ const ForcastGet = async (req, res = response) => {
     const search = new Search(req);
     const cityC = new CityModel();
     try {
-        if (city != undefined) {//Ingresaron el parametro City
-            //Devuelve los datos de ubicación city
+        if (city != undefined) {//They entered the parameter City
+            //Returns the city location data
             await GetPlace(search, cityC,city);
             res.json(search.data);
         } else {
-            //Devuelve la ubicación actual según ip-api y el estado del tiempo Futuro
+            //Returns the current location based on ip-api and Future weather
             await GetPlace(search, cityC);
             const weather = new WeatherModel(search.data.City);
             await GetWeather(search, weather, 1);
@@ -33,7 +33,6 @@ const ForcastGet = async (req, res = response) => {
             res.json({ City, Longitud, Latitud, ForecastWeather });
         };
     } catch (error) {
-        // console.log(error)
         res.status(400).json({ msg: 'Estamos teniendo Inconvenientes, Intente mas Tarde' })
         return
     }

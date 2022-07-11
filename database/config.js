@@ -5,7 +5,6 @@ const mongoose =require('mongoose');
  * @function ConectDB
  */
 const ConectDB =async()=>{
-    // Funcion que me permite conectarme a la base de Datos
 
 try {
     await mongoose.connect(process.env.MONGO_ATLAS,{

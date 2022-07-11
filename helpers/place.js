@@ -10,7 +10,8 @@ const GetPlace = async (search = Search, cityNew = CityModel, cityInput = '') =>
             } else {
                 console.log('Looking for the city')
                 // Como es una IP que no tengo guardada, la almaceno
-                await search.ObtenerIpLocation();
+                await search.GetLocation();
+                console.log(search.data)
                 cityNew.SaveCity(search.data);
             }
 
@@ -23,7 +24,7 @@ const GetPlace = async (search = Search, cityNew = CityModel, cityInput = '') =>
                 search.data = { City, Latitud, Longitud };
             } else {
                 console.log('Looking for the city');
-                await search.ObtenerCoordenadasCiudad(cityFormat);
+                await search.GetCoordinates(cityFormat);
                 cityNew.SaveCity(search.data)
             };
         }

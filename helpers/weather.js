@@ -18,11 +18,11 @@ const GetWeather = async (busqueda = Search, clima = WeatherModel, type = 0) => 
                 let diferenciaTiempo = (fechaActual - DateLastupdateCurrent) / (1000 * 60); // (1000*60*60*24) --> milisegundos -> segundos -> minutos -> horas -> días
                 if (diferenciaTiempo > 15) {
                     console.log('Requiere realizar nueva consulta Current');
-                    await busqueda.ObtenerClimaActual();
-                    await clima.UpdateWeather(busqueda.dataClimaActual, _id);
+                    await busqueda.GetCurrentWeather();
+                    await clima.UpdateWeather(busqueda.CurrentWeather, _id);
                 } else {
                     console.log('Debo mostrar el clima Current sin cambiar');
-                    busqueda.dataClimaActual = cityDB;
+                    busqueda.CurrentWeather = cityDB;
                 }
             } else {
                 // (FechaUltimaActualizacionForecast==undefined)?FechaUltimaActualizacionForecast=0:None;
@@ -33,12 +33,12 @@ const GetWeather = async (busqueda = Search, clima = WeatherModel, type = 0) => 
                 if (diferenciaTiempo > 60) {
                     console.log('Requiere realizar nueva consulta Forecast');
 
-                    await busqueda.ObtenerClimaFuturo();
+                    await busqueda.GetForecastWeather();
 
-                    await clima.UpdateWeather(busqueda.dataClimaFuturo);
+                    await clima.UpdateWeather(busqueda.ForecastWeather);
                 } else {
                     console.log('Debo mostrar el clima Forecast sin cambiar');
-                    busqueda.dataClimaFuturo = cityDB.ForecastWeather;
+                    busqueda.ForecastWeather = cityDB.ForecastWeather;
                 };
             };
 
@@ -46,17 +46,17 @@ const GetWeather = async (busqueda = Search, clima = WeatherModel, type = 0) => 
         } else {
             console.log('Ciudad No encontrada');
 
-            await busqueda.ObtenerClimaActual();
+            await busqueda.GetCurrentWeather();
 
-            clima.SaveWeather(busqueda.dataClimaActual);
+            clima.SaveWeather(busqueda.CurrentWeather);
             if (type == 1) {
 
-                await busqueda.ObtenerClimaFuturo();
+                await busqueda.GetForecastWeather();
 
-                await clima.UpdateWeather(busqueda.dataClimaFuturo);
+                await clima.UpdateWeather(busqueda.ForecastWeather);
             };
         };
-        // busqueda.ObtenerClimaActual()
+
     } catch (error) {
         console.log(error)
         throw new Error(error);

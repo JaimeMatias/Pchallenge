@@ -18,12 +18,12 @@ const CurrentGet = async (req, res = response) => {
     const search = new Search(req);
     const cityC = new CityModel();
     try {
-        if (city != undefined) { //Ingresaron el parametro City
-            //Devuelve los datos de ubicación city
+        if (city != undefined) { // They entered the parameter City
+            //Returns the city location data
             await GetPlace(search, cityC, city);
             res.json(search.data);
         } else {
-            //Devuelve la ubicación actual según ip-api y el estado del tiempo actual
+            //Returns the current location based on ip-api and current weather status
             await GetPlace(search, cityC);
             const weather = new WeatherModel(search.data.City);
             await GetWeather(search, weather, 0);
