@@ -7,11 +7,6 @@ const router = express.Router();
  * Creates a new Server, and the one in charge of orchestrating the entire system
  * @class
  */
-
-/** @ */
-/**
- * 
- */
 class Server {
     /** @constructor */
     constructor() {
@@ -21,10 +16,6 @@ class Server {
         this.ConectDB(); //Conect the DB
 
         this.routes(); //Server's Route
-    };
-
-    // Middlewares
-    middlewares() {
     };
 
     /** List all the available API's Routes as well as the exception when the route is not valid */

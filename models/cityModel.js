@@ -27,12 +27,12 @@ class CityModel {
 
 
     /**
- * Search for  City in the DB
- * @async
- * @function SearchCity
- * @param ip - The IP of a Request from which we want to know the City
- * @param name - The name of a place from which we want to know the City
- */
+    * Search for  City in the DB
+    * @async
+    * @function SearchCity
+    * @param ip - The IP of a Request from which we want to know the City
+    * @param name - The name of a place from which we want to know the City
+    */
     async SearchCity(ip = '', name = '') {
         try {
             if (ip != '') {
